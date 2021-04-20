@@ -7,6 +7,7 @@ export const AuthContext = React.createContext({
   csrf: "",
   admin: false,
   vid: "",
+  vereniging: "",
   login: () => {},
   logout: () => {},
   setVid: () => {},

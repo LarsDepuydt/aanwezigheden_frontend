@@ -1,4 +1,4 @@
-import EventShow from "../EventShow/EventShow";
+import EventShow from "../components/EventShow/EventShow";
 
 const NewEvent = () => {
   return <EventShow method="post" initialValue={{}} />;

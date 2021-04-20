@@ -7,13 +7,14 @@ import { sortArrayByDate } from "../../shared/util/sortArrayByDate";
 import Year from "./components/Year/Year";
 import Spinner from "../../shared/components/HttpHandling/Spinners/LoadingSpinnerCenter/LoadingSpinnerCenter";
 import PageError from "../../shared/components/HttpHandling/PageError/PageError";
+import Button from "../../shared/components/UI/Button/Button";
 
 const Main = () => {
   const [events, setEvents] = useState([]);
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const { token } = auth;
+  const { token, vereniging } = auth;
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -48,8 +49,9 @@ const Main = () => {
         setEvents(eventsSorted);
       } catch (err) {}
     };
+    history.push("/" + vereniging);
     fetchEvents();
-  }, [sendRequest, token]);
+  }, [sendRequest, token, vereniging]);
 
   const cardStateChangeHandler = (value, id, number, month, year) => {
     if (events[year][month][number].value !== value) {
@@ -114,6 +116,11 @@ const Main = () => {
     history.push(0);
   };
 
+  const newEventClickedHandler = () => {
+    const old = history.location.pathname;
+    history.push(old + "/nieuw-event");
+  };
+
   let years;
   if (events.length !== 0) {
     const keys = Object.keys(events);
@@ -144,7 +151,14 @@ const Main = () => {
         />
       )}
       {!isLoading && years && years.length === 0 ? (
-        <p>Er zijn nog geen evenementen aangemaakt door je vereniging</p>
+        <>
+          <p>Er zijn nog geen evenementen aangemaakt door je vereniging</p>
+          {auth.admin && (
+            <Button btnType="secondary" small clicked={newEventClickedHandler}>
+              Maak een event
+            </Button>
+          )}
+        </>
       ) : (
         years
       )}

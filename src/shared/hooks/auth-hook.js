@@ -8,24 +8,30 @@ export const useAuth = () => {
   const [userId, setUserId] = useState(false);
   const [admin, setAdmin] = useState(null);
   const [vid, setVid] = useState(null);
+  const [vereniging, setVereniging] = useState(null);
 
-  const login = useCallback((uid, token, admin = false, expirationDate) => {
-    setToken(token);
-    setUserId(uid);
-    setAdmin(admin);
-    const tokenExpirationDate =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 30);
-    setTokenExpirationDate(tokenExpirationDate);
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: uid,
-        token: token,
-        admin: admin,
-        expiration: tokenExpirationDate.toISOString(),
-      })
-    );
-  }, []);
+  const login = useCallback(
+    (uid, token, admin = false, vereniging = "", expirationDate) => {
+      setToken(token);
+      setUserId(uid);
+      setAdmin(admin);
+      setVereniging(vereniging);
+      const tokenExpirationDate =
+        expirationDate || new Date(new Date().getTime() + 1000 * 60 * 30);
+      setTokenExpirationDate(tokenExpirationDate);
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          userId: uid,
+          token: token,
+          admin: admin,
+          vereniging: vereniging,
+          expiration: tokenExpirationDate.toISOString(),
+        })
+      );
+    },
+    []
+  );
 
   const logout = useCallback(() => {
     setToken(null);
@@ -60,10 +66,20 @@ export const useAuth = () => {
         storedData.userId,
         storedData.token,
         storedData.admin || false,
+        storedData.vereniging,
         new Date(storedData.expiration)
       );
     }
   }, [login]);
 
-  return { token, admin, login, logout, userId, vid, setVid: setVidFunction };
+  return {
+    token,
+    admin,
+    login,
+    logout,
+    userId,
+    vid,
+    setVid: setVidFunction,
+    vereniging,
+  };
 };

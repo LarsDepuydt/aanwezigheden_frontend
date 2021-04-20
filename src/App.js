@@ -6,23 +6,48 @@ import { useAuth } from "./shared/hooks/auth-hook";
 import NieuweVereniging from "./pages/NieuweVereniging/NieuweVereniging";
 import SignInUp from "./pages/SignInUp/SignInUp";
 import Main from "./pages/Main/Main";
+import NewEvent from "./pages/Admin/NewEvent/NewEvent";
 import Navigation from "./shared/components/hoc/Navigation/Navigation";
 import PageError from "./shared/components/HttpHandling/PageError/PageError";
 
 const App = () => {
-  const { token, admin, login, logout, userId, vid, setVid } = useAuth();
+  const {
+    token,
+    admin,
+    login,
+    logout,
+    userId,
+    vid,
+    setVid,
+    vereniging,
+  } = useAuth();
 
   let routes;
   if (token) {
-    routes = (
-      <Switch>
-        <Route exact path="/:verenigingNaam">
-          <Main />
-        </Route>
-        <Redirect from="/:verenigingNaam" to="/:verenigingNaam" />
-        <PageError error="Vereniging bestaat niet" />
-      </Switch>
-    );
+    if (admin) {
+      routes = (
+        <Switch>
+          <Route exact path="/:verenigingNaam">
+            <Main />
+          </Route>
+          <Route exact path="/:verenigingNaam/nieuw-event">
+            <NewEvent />
+          </Route>
+          <Redirect from="/:verenigingNaam" to="/:verenigingNaam" />
+          <PageError error="Vereniging bestaat niet" />
+        </Switch>
+      );
+    } else {
+      routes = (
+        <Switch>
+          <Route exact path="/:verenigingNaam">
+            <Main />
+          </Route>
+          <Redirect from="/:verenigingNaam" to="/:verenigingNaam" />
+          <PageError error="Vereniging bestaat niet" />
+        </Switch>
+      );
+    }
   } else {
     routes = (
       <Switch>
@@ -50,6 +75,7 @@ const App = () => {
         csrf: "",
         admin: admin,
         vid,
+        vereniging,
         login,
         logout,
         setVid,

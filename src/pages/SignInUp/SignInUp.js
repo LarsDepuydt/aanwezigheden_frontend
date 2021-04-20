@@ -4,7 +4,7 @@ import {
   VALIDATOR_MINLENGTH,
 } from "../../shared/util/validators";
 import { updateObject } from "../../shared/util/utility";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../../shared/hooks/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
@@ -65,13 +65,14 @@ const SignUp = (props) => {
   }, []);
 
   const history = useHistory();
+  const params = useParams();
 
   const changeSignInHandler = (event) => {
     event.preventDefault();
     if (signIn) {
-      history.push("/registreren");
+      history.push("/" + params.verenigingNaam + "/registreren");
     } else {
-      history.push("/inloggen");
+      history.push("/" + params.verenigingNaam + "/inloggen");
     }
   };
 

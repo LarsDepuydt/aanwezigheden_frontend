@@ -1,5 +1,5 @@
 import { useState, useReducer, useCallback, useRef, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -62,7 +62,6 @@ const NieuweVeringing = () => {
   const ref4 = useRef(null);
 
   const history = useHistory();
-  const { verenigingNaam } = useParams();
 
   const buttonClickedHandler = async (event) => {
     event.preventDefault();
@@ -76,8 +75,15 @@ const NieuweVeringing = () => {
           username,
           password: vereniginInfo.password.value,
         });
-        auth.login(responseData.userId, responseData.token);
-        history.push("/" + verenigingNaam);
+        auth.login(
+          responseData.userId,
+          responseData.token,
+          true,
+          vereniginInfo.naamVereniging.value
+        );
+        history.push(
+          "/" + vereniginInfo.naamVereniging.value.replaceAll(" ", "-")
+        );
       } catch (err) {}
     } else {
       setTouchedState(true);
