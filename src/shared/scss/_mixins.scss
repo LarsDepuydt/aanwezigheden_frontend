@@ -1,0 +1,28 @@
+@import "./fontSize";
+@import "./values";
+@import "./padding";
+
+@mixin box-shadow() {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+@mixin errorMessage() {
+  color: red;
+  font-weight: 700;
+
+  @include responsive-font($font-min-p, $font-max-p);
+}
+
+@mixin box($max-padding: $padding-max-box, $grow: $padding-grow-box) {
+  margin: 10vmin auto 0 auto;
+  width: 100%;
+  max-width: 550px;
+  border-radius: $borderRadius;
+  @include responsive-padding($padding-min-box, $max-padding, $grow, $padding-verhouding-box);
+  @include box-shadow();
+
+  @media (max-width: 560px) {
+    width: 100%;
+    box-shadow: none;
+  }
+}

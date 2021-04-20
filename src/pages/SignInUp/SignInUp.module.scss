@@ -1,0 +1,28 @@
+@import "../../shared/scss/mixins";
+
+.signupDiv {
+  @include box();
+
+  h2 {
+    margin-bottom: 7vmin;
+  }
+
+  .naamDiv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 30px;
+
+    .halfDiv {
+      flex-basis: 220px;
+      flex-grow: 1;
+    }
+  }
+
+  .buttonMargin {
+    margin-top: 7vmin;
+  }
+
+  .error {
+    @include errorMessage();
+  }
+}

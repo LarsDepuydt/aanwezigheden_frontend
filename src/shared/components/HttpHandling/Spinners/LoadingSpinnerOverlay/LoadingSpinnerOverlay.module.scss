@@ -1,0 +1,12 @@
+@import "../../../../scss/values";
+
+.loadingDiv {
+  position: absolute;
+  left: calc((100vw - #{$widthSpinnerBox}) / 2);
+  top: calc((100vh - #{$heightSpinnerBox}) / 2);
+  width: $widthSpinnerBox;
+  height: $heightSpinnerBox;
+  background-color: white;
+  z-index: 100;
+  border-radius: 10px;
+}

@@ -1,0 +1,19 @@
+$red: #dd0404;
+$blue: #03426a;
+
+$blueHover: lighten($blue, 7%);
+$lightGrey: #ccc;
+
+// button
+$btnPrimBackground: $blue;
+$btnPrimColor: white;
+$btnPrimHoverBackground: $blueHover;
+
+$btnSecColor: #f0f0f0;
+$btnSecHoverColor: darken(#f0f0f0, 10%);
+
+$btnLinkColor: white;
+$btnLinkHoverColor: darken(white, 5%);
+
+$btnDisabledColor: darken($lightGrey, 30%);
+$btnDisabledBackgroundColor: $lightGrey;

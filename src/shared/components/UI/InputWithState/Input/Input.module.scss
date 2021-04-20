@@ -1,0 +1,88 @@
+@import "../../../../scss/fontSize";
+@import "../../../../scss/values";
+@import "../../../../scss/mixins";
+
+.Label {
+  display: block;
+  font-weight: 600;
+  text-align: start;
+  margin: 0 auto;
+  padding-left: 0.5em;
+  color: rgb(26, 26, 26);
+  @include responsive-font($font-min-label, $font-max-label, $font-grow-label);
+}
+
+.Input {
+  border: 1px solid #ccc;
+  border-radius: $borderRadius;
+  padding: 0.6em 0.8em;
+  margin: 0 auto;
+  outline: none;
+  display: block;
+  width: 100%;
+  margin: 0;
+  @include responsive-font($font-min-input, $font-max-input, $font-grow-input);
+}
+
+.Input[type="password"] {
+  font-weight: 1000;
+  letter-spacing: 2px;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url("../../../../../assets/icons/noun_triangle_2521059.svg") no-repeat 97% 50%;
+}
+
+.select:focus,
+.select:hover {
+  filter: brightness(0.001);
+}
+
+.Input:focus,
+.Input:hover {
+  border-color: lighten(rgb(26, 26, 26), 30%);
+}
+
+// hide arrows of number input
+/* Chrome, Safari, Edge, Opera */
+.Input::-webkit-outer-spin-button,
+.Input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.Input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.errorMessage {
+  @include errorMessage();
+
+  margin: 1vh auto 2vh auto;
+}
+
+// invalid input field
+.Invalid {
+  border: 1px solid red;
+  background-color: lighten(red, 30%);
+}
+
+.Invalid:focus,
+.Invalid:hover {
+  border-color: red;
+  background-color: #fda49a;
+}
+
+.center {
+  text-align: center;
+}
+
+// hide error message
+.notShow {
+  display: none;
+}

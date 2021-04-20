@@ -1,0 +1,73 @@
+@import "../../../scss/sharedColors";
+@import "../../../scss/fontSize";
+@import "../../../scss/padding";
+@import "../../../scss/values";
+
+.Button {
+  margin: 1em auto;
+  font-weight: 700;
+  border: none;
+  border-radius: $borderRadius;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  outline: none;
+  @include responsive-font($font-min-b, $font-max-b, $font-grow-b);
+  @include responsive-padding($padding-min, $padding-max, $padding-grow);
+}
+
+.positive {
+  margin: auto 0;
+  background-color: green;
+  @include responsive-padding($padding-min-janee, $padding-max-janee, $padding-grow-janee, $padding-verhouding-janee);
+}
+
+.negative {
+  margin: auto 0;
+  background-color: red;
+  @include responsive-padding($padding-min-janee, $padding-max-janee, $padding-grow-janee, $padding-verhouding-janee);
+}
+
+// type: primary
+.primary:not([disabled]) {
+  background-color: $btnPrimBackground;
+  color: $btnPrimColor;
+}
+
+.primary:not([disabled]):focus,
+.primary:not([disabled]):hover {
+  background-color: $btnPrimHoverBackground;
+}
+
+// type: secondary
+.secondary:not([disabled]) {
+  background-color: $btnSecColor;
+}
+
+.secondary:not([disabled]):focus,
+.secondary:not([disabled]):hover {
+  background-color: $btnSecHoverColor;
+}
+
+// type: link
+.link:not([disabled]) {
+  background-color: $btnLinkColor;
+  display: block;
+  margin-top: 0;
+}
+
+.link:not([disabled]):focus,
+.link:not([disabled]):hover {
+  background-color: $btnLinkHoverColor;
+}
+
+.Button:disabled,
+.disabledS {
+  color: $btnDisabledColor;
+  background-color: $btnDisabledBackgroundColor;
+  cursor: not-allowed;
+}
+
+.small {
+  @include responsive-font($font-min-bl, $font-max-bl, $font-grow-bl);
+  @include responsive-padding($padding-min-link, $padding-max-link, $padding-grow-link);
+}

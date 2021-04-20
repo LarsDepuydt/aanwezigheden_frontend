@@ -1,0 +1,9 @@
+@import "../../../scss/mixins";
+@import "../../../scss/fontSize";
+
+.errorText {
+  margin: 3vh auto;
+
+  @include errorMessage();
+  @include responsive-font($font-min-label, $font-max-label, $font-grow-label);
+}

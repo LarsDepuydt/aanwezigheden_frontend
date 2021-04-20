@@ -1,0 +1,77 @@
+@import "../../../../../shared/scss/fontSize";
+
+$height: 50px;
+
+@mixin bol() {
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  margin: auto 6px;
+}
+
+.StatusDiv {
+  display: flex;
+  height: $height;
+  width: 95%;
+  background-color: grey;
+  border-radius: 25px;
+  margin: 1vh auto;
+  position: relative;
+
+  .BolDiv {
+    @include bol();
+    background-color: white;
+
+    svg {
+      width: 30px;
+      margin: 4px;
+      fill: black;
+    }
+  }
+
+  .label {
+    margin: auto;
+    @include responsive-font($font-min-label, $font-max-label);
+    font-weight: 500;
+    user-select: none;
+    -ms-user-selec: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+.BolDiv2 {
+  @include bol();
+  background-color: transparent;
+
+  svg {
+    width: 16px;
+    margin-top: 12px;
+  }
+}
+
+.green {
+  background-color: green;
+  cursor: pointer;
+
+  .BolDiv svg {
+    fill: green;
+  }
+}
+
+.red {
+  background-color: red;
+  cursor: pointer;
+
+  .BolDiv svg {
+    fill: red;
+  }
+}
+
+.change {
+  position: absolute;
+  right: 40px;
+  top: calc((#{$height} - 21px) / 2);
+  font-size: 17px;
+  margin: 0;
+}

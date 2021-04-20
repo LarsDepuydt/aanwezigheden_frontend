@@ -1,0 +1,15 @@
+@import "../../../../shared/scss/mixins";
+@import "../../../../shared/scss/values";
+
+.CardDiv {
+  @include box-shadow();
+  border-radius: $borderRadius;
+  width: 90vw;
+  max-width: $cardWith;
+  padding: 2vh 2vw;
+
+  h4 {
+    margin-top: 2vh;
+    font-weight: 500;
+  }
+}

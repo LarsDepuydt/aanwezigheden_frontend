@@ -1,0 +1,43 @@
+@import "./shared/scss/fontSize";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 10px;
+  text-align: center;
+  font-size: 17px;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p {
+  max-width: 700px;
+  margin: auto;
+  @include responsive-font($font-min-p, $font-max-p);
+}
+
+h1 {
+  display: none;
+}
+
+h2 {
+  @include responsive-font($font-min-h2, $font-max-h2, $font-grow-h2);
+}
+
+h3 {
+  @include responsive-font($font-min-h3, $font-max-h3);
+}
+
+h4 {
+  @include responsive-font($font-min-h4, $font-max-h4);
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 0;
+  }
+}
