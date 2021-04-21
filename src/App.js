@@ -22,6 +22,7 @@ const App = () => {
     vereniging,
   } = useAuth();
 
+  console.log(token);
   let routes;
   if (token) {
     if (admin) {
@@ -38,6 +39,7 @@ const App = () => {
         </Switch>
       );
     } else {
+      console.log("here");
       routes = (
         <Switch>
           <Route exact path="/:verenigingNaam">

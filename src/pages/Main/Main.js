@@ -49,7 +49,6 @@ const Main = () => {
         setEvents(eventsSorted);
       } catch (err) {}
     };
-    history.push("/" + vereniging);
     fetchEvents();
   }, [sendRequest, token, vereniging]);
 

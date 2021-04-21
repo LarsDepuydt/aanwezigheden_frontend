@@ -85,11 +85,12 @@ const SignUp = (props) => {
     if (signinInfo.isValid) {
       const username =
         signinInfo.voornaam.value + " " + signinInfo.achternaam.value;
+      const vname = params.verenigingNaam;
 
       if (signIn) {
         try {
           const responseData = await sendRequest(
-            `api/users/${auth.vid}/login`,
+            `api/users/${vname}/login`,
             "patch",
             {
               username,
@@ -105,7 +106,7 @@ const SignUp = (props) => {
       } else {
         try {
           const responseData = await sendRequest(
-            `api/users/${auth.vid}/signup`,
+            `api/users/${vname}/signup`,
             "post",
             {
               username,
@@ -121,6 +122,7 @@ const SignUp = (props) => {
           );
         } catch (err) {}
       }
+      history.push("/" + vname);
     } else {
       setTouchedState(true);
       if (!signinInfo.voornaam.isValid) {
