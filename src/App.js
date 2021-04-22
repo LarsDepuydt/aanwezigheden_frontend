@@ -8,45 +8,35 @@ import SignInUp from "./pages/SignInUp/SignInUp";
 import Main from "./pages/Main/Main";
 import NewEvent from "./pages/Admin/NewEvent/NewEvent";
 import Navigation from "./shared/components/hoc/Navigation/Navigation";
-import PageError from "./shared/components/HttpHandling/PageError/PageError";
 
 const App = () => {
-  const {
-    token,
-    admin,
-    login,
-    logout,
-    userId,
-    vid,
-    setVid,
-    vereniging,
-  } = useAuth();
+  const { token, admin, login, logout, userId, vereniging } = useAuth();
 
-  console.log(token);
   let routes;
   if (token) {
     if (admin) {
       routes = (
         <Switch>
-          <Route exact path="/:verenigingNaam">
+          <Redirect from="/nieuwe-vereniging" to="/" />
+          <Route exact path={"/" + vereniging}>
             <Main />
           </Route>
-          <Route exact path="/:verenigingNaam/nieuw-event">
+          <Route exact path={"/" + vereniging + "/nieuw-event"}>
             <NewEvent />
           </Route>
-          <Redirect from="/:verenigingNaam" to="/:verenigingNaam" />
-          <PageError error="Vereniging bestaat niet" />
+          <Redirect from={"/" + vereniging} to={"/" + vereniging} />
+          <Redirect to={"/" + vereniging} />
         </Switch>
       );
     } else {
-      console.log("here");
       routes = (
         <Switch>
-          <Route exact path="/:verenigingNaam">
+          <Redirect from="/nieuwe-vereniging" to="/" />
+          <Route exact path={"/" + vereniging}>
             <Main />
           </Route>
-          <Redirect from="/:verenigingNaam" to="/:verenigingNaam" />
-          <PageError error="Vereniging bestaat niet" />
+          <Redirect from={"/" + vereniging} to={"/" + vereniging} />
+          <Redirect to={"/" + vereniging} />
         </Switch>
       );
     }
@@ -76,11 +66,9 @@ const App = () => {
         token: token,
         csrf: "",
         admin: admin,
-        vid,
         vereniging,
         login,
         logout,
-        setVid,
       }}
     >
       <Router>

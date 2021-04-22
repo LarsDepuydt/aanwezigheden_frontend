@@ -7,7 +7,6 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState(null);
   const [userId, setUserId] = useState(false);
   const [admin, setAdmin] = useState(null);
-  const [vid, setVid] = useState(null);
   const [vereniging, setVereniging] = useState(null);
 
   const login = useCallback(
@@ -39,10 +38,6 @@ export const useAuth = () => {
     setUserId(null);
     setAdmin(null);
     localStorage.removeItem("userData");
-  }, []);
-
-  const setVidFunction = useCallback((vid) => {
-    setVid(vid);
   }, []);
 
   useEffect(() => {
@@ -78,8 +73,6 @@ export const useAuth = () => {
     login,
     logout,
     userId,
-    vid,
-    setVid: setVidFunction,
     vereniging,
   };
 };

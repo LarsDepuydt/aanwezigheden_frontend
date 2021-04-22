@@ -86,6 +86,7 @@ const SignUp = (props) => {
       const username =
         signinInfo.voornaam.value + " " + signinInfo.achternaam.value;
       const vname = params.verenigingNaam;
+      console.log(vname);
 
       if (signIn) {
         try {
@@ -100,7 +101,8 @@ const SignUp = (props) => {
           auth.login(
             responseData.userId,
             responseData.token,
-            responseData.admin
+            responseData.admin,
+            vname
           );
         } catch (err) {}
       } else {
@@ -118,7 +120,8 @@ const SignUp = (props) => {
           auth.login(
             responseData.userId,
             responseData.token,
-            responseData.admin
+            responseData.admin,
+            vname
           );
         } catch (err) {}
       }
