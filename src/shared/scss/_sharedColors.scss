@@ -10,10 +10,16 @@ $btnPrimColor: white;
 $btnPrimHoverBackground: $blueHover;
 
 $btnSecColor: #f0f0f0;
-$btnSecHoverColor: darken(#f0f0f0, 10%);
+$btnSecHoverColor: darken($btnSecColor, 10%);
 
 $btnLinkColor: white;
-$btnLinkHoverColor: darken(white, 5%);
+$btnLinkHoverColor: darken($btnLinkColor, 5%);
 
 $btnDisabledColor: darken($lightGrey, 30%);
 $btnDisabledBackgroundColor: $lightGrey;
+
+$btnDeleteColor: darken(red, 10%);
+$btnDeleteHoverColor: darken($btnDeleteColor, 10%);
+
+$btnEditColor: #f0f0f0;
+$btnEditHoverColor: darken($btnEditColor, 10%);

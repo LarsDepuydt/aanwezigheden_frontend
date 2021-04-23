@@ -1,4 +1,5 @@
 import { useReducer, useCallback, useContext, useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_DATE,
@@ -44,6 +45,7 @@ const EventShow = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [eventCreated, setEventCreated] = useState(false);
   const [touchedState, setTouchedState] = useState(false);
+  const history = useHistory();
 
   const stateChangeHandler = (stateName, value, isValid) => {
     dispatch({ type: "STATE_CHANGE", stateName, value, isValid });
@@ -84,27 +86,24 @@ const EventShow = (props) => {
         timeArray[1]
       );
 
-      try {
-        let url = "/api/event";
-        if (props.method === "patch") {
-          url = url + "/" + props.initialValue.id;
-        }
-
-        await sendRequest(
-          url,
-          props.method,
-          {
-            name: eventState.name.value,
-            date: dateObj,
-          },
-          {
-            Authorization: "Bearer " + auth.token,
-          }
-        );
-
-        setEventCreated(true);
+      if (props.method === "post") {
+        try {
+          await sendRequest(
+            "/api/event",
+            "post",
+            {
+              name: eventState.name.value,
+              date: dateObj,
+            },
+            {
+              Authorization: "Bearer " + auth.token,
+            }
+          );
+          setEventCreated(true);
+        } catch (err) {}
+      } else {
         props.succes({ name: eventState.name.value, date: dateObj });
-      } catch (err) {}
+      }
     } else {
       setTouchedState(true);
       if (!eventState.name.isValid) {
@@ -120,6 +119,10 @@ const EventShow = (props) => {
   const nieuwEventHandler = () => {
     dispatch({ type: "CLEAR_STATE" });
     setEventCreated(false);
+  };
+
+  const backToMainHandler = () => {
+    history.push("/" + auth.vereniging);
   };
 
   let headerText;
@@ -211,9 +214,14 @@ const EventShow = (props) => {
       )}
       {isLoading && <LoadingSpinner />}
       {eventCreated && !isLoading && props.method === "post" && (
-        <Button small btnType="secondary" clicked={nieuwEventHandler}>
-          Maak nog een event
-        </Button>
+        <>
+          <Button small btnType="secondary" clicked={nieuwEventHandler}>
+            Maak nog een event
+          </Button>
+          <Button small btnType="secondary" clicked={backToMainHandler}>
+            Terug naar overzicht
+          </Button>
+        </>
       )}
     </form>
   );

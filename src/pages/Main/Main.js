@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useEventsSort } from "../../shared/hooks/events-hook";
 import { AuthContext } from "../../shared/hooks/auth-context";
-import { sortArrayByDate } from "../../shared/util/sortArrayByDate";
 
 import Year from "./components/Year/Year";
 import Spinner from "../../shared/components/HttpHandling/Spinners/LoadingSpinnerCenter/LoadingSpinnerCenter";
@@ -10,9 +10,14 @@ import PageError from "../../shared/components/HttpHandling/PageError/PageError"
 import Button from "../../shared/components/UI/Button/Button";
 
 const Main = () => {
-  const [events, setEvents] = useState([]);
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const {
+    events,
+    sortArrayByDate,
+    resortOneDateArray,
+    updateCardInfo,
+  } = useEventsSort();
 
   const { token, vereniging } = auth;
   useEffect(() => {
@@ -27,6 +32,12 @@ const Main = () => {
           for (const event of responseData.events.aanwezig) {
             event.state = 1;
             event.touched = false;
+            const today = new Date();
+            if (today > event.date) {
+              event.past = false;
+            } else {
+              event.past = true;
+            }
             eventsArray.push(event);
           }
         }
@@ -34,6 +45,12 @@ const Main = () => {
           for (const event of responseData.events.afwezig) {
             event.state = 0;
             event.touched = false;
+            const today = new Date();
+            if (today > event.date) {
+              event.past = false;
+            } else {
+              event.past = true;
+            }
             eventsArray.push(event);
           }
         }
@@ -41,12 +58,17 @@ const Main = () => {
           for (const event of responseData.events.onbepaald) {
             event.state = 2;
             event.touched = false;
+            const today = new Date();
+            if (today > event.date) {
+              event.past = false;
+            } else {
+              event.past = true;
+            }
             eventsArray.push(event);
           }
         }
 
-        const eventsSorted = sortArrayByDate(eventsArray);
-        setEvents(eventsSorted);
+        sortArrayByDate(eventsArray, {});
       } catch (err) {}
     };
     fetchEvents();
@@ -54,27 +76,10 @@ const Main = () => {
 
   const cardStateChangeHandler = (value, id, number, month, year) => {
     if (events[year][month][number].value !== value) {
-      const newEvent = {
-        ...events[year][month][number],
-        touched: true,
-        state: value,
-      };
-
-      const newMonthArray = events[year][month];
-      newMonthArray[number] = newEvent;
-      const newEvents = {
-        ...events,
-        [year]: { ...events[year], [month]: newMonthArray },
-      };
-      setEvents(newEvents);
+      updateCardInfo(value, year, month, number);
 
       let name;
-      if (value === 1) {
-        name = "aanwezig";
-      } else {
-        name = "afwezig";
-      }
-
+      value === 1 ? (name = "aanwezig") : (name = "afwezig");
       sendUpdateRequestHandler(name, [id]);
     }
   };
@@ -94,19 +99,24 @@ const Main = () => {
     } catch (err) {}
   };
 
-  const eventUpdatedHandler = (obj, id, number, month, year) => {
-    const newEvents = { ...events };
-    newEvents[year][month][number].name = obj.name;
+  const eventUpdatedHandler = async (obj, id, number, month, year) => {
+    const response = resortOneDateArray(obj, year, month, number);
 
-    if (obj.date.getYear() === newEvents[year][month])
-      for (const event of newEvents[year][month]) {
-        if (event.id === id) {
-          newEvents[year][month].pull(event);
-        }
-      }
-
-    console.log(newEvents);
-    //setEvents(newEvents);
+    if (response) {
+      try {
+        await sendRequest(
+          "/api/event/" + id,
+          "patch",
+          {
+            name: obj.name,
+            date: obj.date,
+          },
+          {
+            Authorization: "Bearer " + auth.token,
+          }
+        );
+      } catch (err) {}
+    }
   };
 
   const history = useHistory();

@@ -10,7 +10,6 @@ const Navigation = () => {
   const history = useHistory();
 
   const nieuwEventClickedHandler = () => {
-    console.log(auth.vereniging);
     history.push("/" + auth.vereniging + "/nieuw-event");
   };
 

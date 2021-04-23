@@ -9,6 +9,8 @@ const button = (props) => {
         !props.disabledS && classes[props.btnType],
         props.disabledS && classes.disabledS,
         props.small && classes.small,
+        props.delete && classes.delete,
+        props.edit && classes.edit,
       ].join(" ")}
       onClick={props.clicked}
     >

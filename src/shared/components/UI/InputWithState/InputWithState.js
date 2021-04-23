@@ -31,7 +31,6 @@ const InputWithState = (props) => {
   };
   if (type === "date" && initialValue !== undefined) {
     const curr = new Date(initialValue);
-    curr.setDate(curr.getDate());
     const initialValue_new = curr.toISOString().substr(0, 10);
 
     initialState = {
@@ -43,13 +42,9 @@ const InputWithState = (props) => {
 
   if (type === "time" && initialValue !== undefined) {
     const splitted = initialValue.split(":");
-    const hour = "0" + splitted[0];
-    const minutes = "0" + splitted[1];
-    const curr = new Date(
-      "1990-01-01 " + hour.slice(-2) + ":" + minutes.slice(-2)
-    );
-    curr.setDate(curr.getDate());
-    const initialValue_new = curr.toISOString().substr(11, 5);
+    const hour = ("0" + splitted[0]).slice(-2);
+    const minutes = ("0" + splitted[1]).slice(-2);
+    const initialValue_new = hour + ":" + minutes;
 
     initialState = {
       value: initialValue_new,

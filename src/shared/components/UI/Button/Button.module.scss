@@ -60,6 +60,19 @@
   background-color: $btnLinkHoverColor;
 }
 
+// type: svg
+.svg:not([disabled]) {
+  background-color: $btnDeleteColor;
+  display: block;
+  margin: 0;
+  @include responsive-padding(
+    $padding-min-delete,
+    $padding-max-delete,
+    $padding-grow-delete,
+    $padding-verhouding-delete
+  );
+}
+
 .Button:disabled,
 .disabledS {
   color: $btnDisabledColor;
@@ -70,4 +83,24 @@
 .small {
   @include responsive-font($font-min-bl, $font-max-bl, $font-grow-bl);
   @include responsive-padding($padding-min-link, $padding-max-link, $padding-grow-link);
+}
+
+// delete button
+.delete:not([disabled]) {
+  background-color: $btnDeleteColor;
+}
+
+.delete:not([disabled]):focus,
+.delete:not([disabled]):hover {
+  background-color: $btnDeleteHoverColor;
+}
+
+// edit button
+.edit:not([disabled]) {
+  background-color: $btnEditColor;
+}
+
+.edit:not([disabled]):focus,
+.edit:not([disabled]):hover {
+  background-color: $btnEditHoverColor;
 }
