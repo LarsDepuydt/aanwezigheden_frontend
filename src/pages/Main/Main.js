@@ -72,7 +72,7 @@ const Main = () => {
       } catch (err) {}
     };
     fetchEvents();
-  }, [sendRequest, token, vereniging]);
+  }, [sendRequest, token, vereniging, sortArrayByDate]);
 
   const cardStateChangeHandler = (value, id, number, month, year) => {
     if (events[year][month][number].value !== value) {
