@@ -78,13 +78,9 @@ const Main = () => {
   const cardStateChangeValueHandler = (id, number, month, year) => {
     const oldValue = events[year][month][number].state;
 
-    let newValue;
-    if (oldValue === 1) {
-      newValue = 0;
-    } else if (oldValue === 0) {
+    let newValue = 0;
+    if (oldValue === 0) {
       newValue = 1;
-    } else {
-      newValue = 0;
     }
 
     cardStateChangeHandler(newValue, id, number, month, year);
