@@ -4,7 +4,6 @@ export const useEventsSort = () => {
   const [events, setEvents] = useState({});
 
   const sortArrayByDate = useCallback((eventsArray, startEventsObj) => {
-    console.log("called");
     let yearsObject = startEventsObj;
 
     for (const event of eventsArray) {

@@ -31,10 +31,9 @@ const Card = (props) => {
     setAanpassen(false);
   };
 
-  let text = props.name + " om " + props.date.getHours() + " uur ";
-  if (props.date.getMinutes() !== 0) {
-    text = text + props.date.getMinutes();
-  }
+  const minutes = "00" + props.date.getMinutes();
+  let text =
+    props.name + " om " + props.date.getHours() + ":" + minutes.slice(-2);
 
   const date =
     props.date.getFullYear() +
