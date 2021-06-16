@@ -14,17 +14,8 @@ import classes from "./Card.module.scss";
 
 const Card = (props) => {
   const value = props.state;
-  const { changeState } = props;
   const auth = useContext(AuthContext);
   const [aanpassen, setAanpassen] = useState(false);
-
-  const changeValueHandler = () => {
-    if (value === 1) {
-      changeState(0);
-    } else if (value === 0) {
-      changeState(1);
-    }
-  };
 
   const eventUpdatedHandler = (newValues) => {
     props.eventUpdated(newValues);
@@ -52,15 +43,18 @@ const Card = (props) => {
           {!auth.admin && (
             <UserBtn
               value={value}
-              changeValueHandler={changeValueHandler}
-              changeState={changeState}
+              changeValueHandler={props.changeValueHandler}
+              changeValue={props.changeValue}
             />
           )}
           <Button small btnType="link">
             Bekijk aanwezigheden
           </Button>
           {auth.admin && (
-            <AdminBtn aanpassenClicked={() => setAanpassen(true)} />
+            <AdminBtn
+              aanpassenClicked={() => setAanpassen(true)}
+              deleteClicked={props.eventDeleted}
+            />
           )}
         </>
       )}

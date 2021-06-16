@@ -118,5 +118,39 @@ export const useEventsSort = () => {
     setEvents(newEvents);
   };
 
-  return { events, sortArrayByDate, resortOneDateArray, updateCardInfo };
+  const deleteCard = (number, month, year) => {
+    const newMonthArray = events[year][month];
+
+    let newEvents;
+    if (newMonthArray.length > 1) {
+      console.log("entry in month");
+      newMonthArray.splice(number, number + 1);
+      newEvents = {
+        ...events,
+        [year]: { ...events[year], [month]: newMonthArray },
+      };
+    } else if (Object.keys(events).length <= 1) {
+      console.log("empty");
+      newEvents = {};
+    } else if (Object.keys(events[year]).length <= 1) {
+      console.log("delete year");
+      newEvents = events;
+      delete newEvents[year];
+    } else {
+      console.log("delete month");
+      console.log(Object.keys(events[year]).length);
+      newEvents = events;
+      delete newEvents[year][month];
+    }
+
+    setEvents(newEvents);
+  };
+
+  return {
+    events,
+    sortArrayByDate,
+    resortOneDateArray,
+    updateCardInfo,
+    deleteCard,
+  };
 };

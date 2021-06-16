@@ -10,12 +10,16 @@ const Year = (props) => {
         year={props.year}
         monthNumber={month}
         events={props.months[month]}
-        changeState={(v, id, n, m) =>
-          props.changeState(v, id, n, m, props.year)
+        changeValue={(v, id, n, m) =>
+          props.changeValue(v, id, n, m, props.year)
+        }
+        changeValueHandler={(id, n, m) =>
+          props.changeValueHandler(id, n, m, props.year)
         }
         eventUpdated={(obj, id, n, m) =>
           props.eventUpdated(obj, id, n, m, props.year)
         }
+        eventDeleted={(id, n, m) => props.eventDeleted(id, n, m, props.year)}
       />
     ));
   }

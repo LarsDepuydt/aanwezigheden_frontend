@@ -18,7 +18,7 @@ export const useHttpClient = () => {
 
       try {
         let response;
-        if (method === "get") {
+        if (method === "get" || method === "delete") {
           response = await axiosRoot[method](url, {
             headers: headers,
             params: body,

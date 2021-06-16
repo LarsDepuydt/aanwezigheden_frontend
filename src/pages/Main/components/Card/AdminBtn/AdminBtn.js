@@ -12,7 +12,7 @@ const AdminBtn = (props) => {
           <Edit />
         </div>
       </Button>
-      <Button small delete btnType="svg">
+      <Button small delete btnType="svg" clicked={props.deleteClicked}>
         <div className={classes.svgDiv}>
           <Delete />
         </div>

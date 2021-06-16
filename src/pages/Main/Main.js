@@ -17,6 +17,7 @@ const Main = () => {
     sortArrayByDate,
     resortOneDateArray,
     updateCardInfo,
+    deleteCard,
   } = useEventsSort();
 
   const { token, vereniging } = auth;
@@ -74,6 +75,21 @@ const Main = () => {
     fetchEvents();
   }, [sendRequest, token, vereniging]);
 
+  const cardStateChangeValueHandler = (id, number, month, year) => {
+    const oldValue = events[year][month][number].state;
+
+    let newValue;
+    if (oldValue === 1) {
+      newValue = 0;
+    } else if (oldValue === 0) {
+      newValue = 1;
+    } else {
+      newValue = 0;
+    }
+
+    cardStateChangeHandler(newValue, id, number, month, year);
+  };
+
   const cardStateChangeHandler = (value, id, number, month, year) => {
     if (events[year][month][number].value !== value) {
       updateCardInfo(value, year, month, number);
@@ -88,7 +104,7 @@ const Main = () => {
     try {
       await sendRequest(
         `http://localhost:5000/api/users`,
-        "PATCH",
+        "patch",
         {
           [name]: idList,
         },
@@ -119,6 +135,23 @@ const Main = () => {
     }
   };
 
+  const eventDeletedHandler = async (id, number, month, year) => {
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/event/" + id,
+        "delete",
+        null,
+        {
+          Authorization: "Bearer " + token,
+        }
+      );
+      console.log("start deleteCard");
+      deleteCard(number, month, year);
+      console.log("end deleteCard");
+      console.log(events);
+    } catch (err) {}
+  };
+
   const history = useHistory();
   const reloadPageHandler = () => {
     clearError();
@@ -131,35 +164,37 @@ const Main = () => {
   };
 
   let years;
-  if (events.length !== 0) {
+  if (Object.keys(events).length > 0) {
     const keys = Object.keys(events);
-    years = keys.map((year, index) => (
+    years = keys.map((year) => (
       <Year
         key={year}
         year={year}
         months={events[year]}
-        changeState={cardStateChangeHandler}
+        changeValue={cardStateChangeHandler}
+        changeValueHandler={cardStateChangeValueHandler}
         eventUpdated={eventUpdatedHandler}
+        eventDeleted={eventDeletedHandler}
       />
     ));
   }
 
   return (
     <>
-      {isLoading && !years && (
+      {isLoading && !error && (
         <>
           <Spinner />
           <p>Even geduld, uw evenementen worden geladen</p>
         </>
       )}
-      {error && !isLoading && !years && (
+      {error && !isLoading && (
         <PageError
           error={error}
           clicked={reloadPageHandler}
           btnText="Probeer opnieuw"
         />
       )}
-      {!isLoading && years && years.length === 0 ? (
+      {!isLoading && !error && Object.keys(events).length === 0 && (
         <>
           <p>Er zijn nog geen evenementen aangemaakt door je vereniging</p>
           {auth.admin && (
@@ -168,9 +203,8 @@ const Main = () => {
             </Button>
           )}
         </>
-      ) : (
-        years
       )}
+      {!isLoading && !error && years && Object.keys(events).length > 0 && years}
     </>
   );
 };
