@@ -40,10 +40,12 @@ const Datum = (props) => {
         name={event.name}
         date={event.date}
         state={event.state}
+        allAanwezigheden={event.allAanwezigheden}
         changeValue={(value) => props.changeValue(value, id)}
         changeValueHandler={() => props.changeValueHandler(id)}
         eventUpdated={(obj) => props.eventUpdated(obj, id)}
         eventDeleted={() => props.eventDeleted(id)}
+        getAllAanwezigheden={(show) => props.getAllAanwezigheden(show, id)}
       />
     </div>
   );

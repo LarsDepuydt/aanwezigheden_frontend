@@ -20,6 +20,9 @@ const Year = (props) => {
           props.eventUpdated(obj, id, n, m, props.year)
         }
         eventDeleted={(id, n, m) => props.eventDeleted(id, n, m, props.year)}
+        getAllAanwezigheden={(show, id, n, m) =>
+          props.getAllAanwezigheden(show, id, n, m, props.year)
+        }
       />
     ));
   }

@@ -1,10 +1,14 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../../shared/hooks/auth-context";
+import { useHttpClient } from "../../../../shared/hooks/http-hook";
 
 import UserBtn from "./UserBtn/UserBtn";
 import AdminBtn from "./AdminBtn/AdminBtn";
 import EventShow from "../../../Admin/components/EventShow/EventShow";
+import AanwezighedenList from "./AanwezighedenList/AanwezighedenList";
 import Button from "../../../../shared/components/UI/Button/Button";
+import Spinner from "../../../../shared/components/HttpHandling/Spinners/LoadingSpinnerCenter/LoadingSpinnerCenter";
+import PageError from "../../../../shared/components/HttpHandling/PageError/PageError";
 
 import classes from "./Card.module.scss";
 
@@ -16,10 +20,37 @@ const Card = (props) => {
   const value = props.state;
   const auth = useContext(AuthContext);
   const [aanpassen, setAanpassen] = useState(false);
+  const [allAanwezigheden, setAllAanwezigheden] = useState(false);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const eventUpdatedHandler = (newValues) => {
     props.eventUpdated(newValues);
     setAanpassen(false);
+  };
+
+  const getAllAanwezighedenHandler = async () => {
+    if (!allAanwezigheden) {
+      try {
+        const response = await sendRequest(
+          "http://localhost:5000/api/event/aanwezigheden/" + props.id,
+          "get",
+          null,
+          {
+            Authorization: "Bearer " + auth.token,
+          }
+        );
+
+        setAllAanwezigheden(response.event);
+      } catch (err) {}
+    } else {
+      setAllAanwezigheden(false);
+    }
+  };
+
+  const retryAanwezighedenHandler = () => {
+    clearError();
+    setAllAanwezigheden(false);
+    getAllAanwezighedenHandler();
   };
 
   const minutes = "00" + props.date.getMinutes();
@@ -47,9 +78,24 @@ const Card = (props) => {
               changeValue={props.changeValue}
             />
           )}
-          <Button small btnType="link">
-            Bekijk aanwezigheden
-          </Button>
+          {!error && (
+            <Button small btnType="link" clicked={getAllAanwezighedenHandler}>
+              {!allAanwezigheden
+                ? "Bekijk aanwezigheden"
+                : "Verberg aanwezigheden"}
+            </Button>
+          )}
+          {allAanwezigheden && !isLoading && !error && (
+            <AanwezighedenList allAanwezigheden={allAanwezigheden} />
+          )}
+          {error && !isLoading && (
+            <PageError
+              error={error}
+              clicked={retryAanwezighedenHandler}
+              btnText="Probeer opnieuw"
+            />
+          )}
+          {isLoading && <Spinner />}
           {auth.admin && (
             <AdminBtn
               aanpassenClicked={() => setAanpassen(true)}

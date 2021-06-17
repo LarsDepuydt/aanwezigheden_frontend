@@ -66,6 +66,14 @@ const Month = (props) => {
         eventDeleted={(id) =>
           props.eventDeleted(id, props.events.indexOf(event), props.monthNumber)
         }
+        getAllAanwezigheden={(show, id) =>
+          props.getAllAanwezigheden(
+            show,
+            id,
+            props.events.indexOf(event),
+            props.monthNumber
+          )
+        }
       />
     ));
   }
