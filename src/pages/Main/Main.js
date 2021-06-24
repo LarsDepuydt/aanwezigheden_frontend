@@ -133,14 +133,9 @@ const Main = () => {
 
   const eventDeletedHandler = async (id, number, month, year) => {
     try {
-      await sendRequest(
-        "http://localhost:5000/api/event/" + id,
-        "delete",
-        null,
-        {
-          Authorization: "Bearer " + token,
-        }
-      );
+      await sendRequest("/api/event/" + id, "delete", null, {
+        Authorization: "Bearer " + token,
+      });
       console.log("start deleteCard");
       deleteCard(number, month, year);
       console.log("end deleteCard");

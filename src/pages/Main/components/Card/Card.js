@@ -32,7 +32,7 @@ const Card = (props) => {
     if (!allAanwezigheden) {
       try {
         const response = await sendRequest(
-          "http://localhost:5000/api/event/aanwezigheden/" + props.id,
+          "/api/event/aanwezigheden/" + props.id,
           "get",
           null,
           {
