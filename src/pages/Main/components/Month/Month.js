@@ -40,9 +40,16 @@ const Month = (props) => {
       <Datum
         key={event._id}
         event={event}
-        changeState={(v, id) =>
-          props.changeState(
+        changeValue={(v, id) =>
+          props.changeValue(
             v,
+            id,
+            props.events.indexOf(event),
+            props.monthNumber
+          )
+        }
+        changeValueHandler={(id) =>
+          props.changeValueHandler(
             id,
             props.events.indexOf(event),
             props.monthNumber
@@ -51,6 +58,17 @@ const Month = (props) => {
         eventUpdated={(obj, id) =>
           props.eventUpdated(
             obj,
+            id,
+            props.events.indexOf(event),
+            props.monthNumber
+          )
+        }
+        eventDeleted={(id) =>
+          props.eventDeleted(id, props.events.indexOf(event), props.monthNumber)
+        }
+        getAllAanwezigheden={(show, id) =>
+          props.getAllAanwezigheden(
+            show,
             id,
             props.events.indexOf(event),
             props.monthNumber

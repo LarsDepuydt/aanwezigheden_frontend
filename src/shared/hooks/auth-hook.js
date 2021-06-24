@@ -11,10 +11,11 @@ export const useAuth = () => {
 
   const login = useCallback(
     (uid, token, admin = false, vereniging = "", expirationDate) => {
+      const verenigingUrl = vereniging.replaceAll(" ", "-");
       setToken(token);
       setUserId(uid);
       setAdmin(admin);
-      setVereniging(vereniging);
+      setVereniging(verenigingUrl);
       const tokenExpirationDate =
         expirationDate || new Date(new Date().getTime() + 1000 * 60 * 30);
       setTokenExpirationDate(tokenExpirationDate);
@@ -24,7 +25,7 @@ export const useAuth = () => {
           userId: uid,
           token: token,
           admin: admin,
-          vereniging: vereniging,
+          vereniging: verenigingUrl,
           expiration: tokenExpirationDate.toISOString(),
         })
       );
