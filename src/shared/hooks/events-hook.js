@@ -122,25 +122,24 @@ export const useEventsSort = () => {
     const newMonthArray = events[year][month];
 
     let newEvents;
-    if (newMonthArray.length > 1) {
-      console.log("entry in month");
+    if (newMonthArray.length >= 2) {
+      // delete event
       newMonthArray.splice(number, number + 1);
       newEvents = {
         ...events,
         [year]: { ...events[year], [month]: newMonthArray },
       };
-    } else if (Object.keys(events).length <= 1) {
-      console.log("empty");
-      newEvents = {};
-    } else if (Object.keys(events[year]).length <= 1) {
-      console.log("delete year");
-      newEvents = events;
+    } else if (Object.keys(events[year]).length >= 2) {
+      // delete maand
+      newEvents = { ...events };
+      delete newEvents[year][month];
+    } else if (Object.keys(events).length >= 2) {
+      // delete jaar
+      newEvents = { ...events };
       delete newEvents[year];
     } else {
-      console.log("delete month");
-      console.log(Object.keys(events[year]).length);
-      newEvents = events;
-      delete newEvents[year][month];
+      // delete all
+      newEvents = {};
     }
 
     setEvents(newEvents);

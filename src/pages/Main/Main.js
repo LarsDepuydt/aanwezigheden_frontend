@@ -136,10 +136,8 @@ const Main = () => {
       await sendRequest(`/api/event/${id}`, "delete", null, {
         Authorization: "Bearer " + token,
       });
-      console.log("start deleteCard");
+
       deleteCard(number, month, year);
-      console.log("end deleteCard");
-      console.log(events);
     } catch (err) {}
   };
 
