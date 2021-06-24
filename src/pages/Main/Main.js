@@ -24,7 +24,7 @@ const Main = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const responseData = await sendRequest(`api/event`, "get", null, {
+        const responseData = await sendRequest("api/event", "get", null, {
           Authorization: `Bearer ${token}`,
         });
 
@@ -99,7 +99,7 @@ const Main = () => {
   const sendUpdateRequestHandler = async (name, idList) => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/users`,
+        "/api/users",
         "patch",
         {
           [name]: idList,
@@ -117,7 +117,7 @@ const Main = () => {
     if (response) {
       try {
         await sendRequest(
-          "/api/event/" + id,
+          `/api/event/${id}`,
           "patch",
           {
             name: obj.name,
@@ -133,7 +133,7 @@ const Main = () => {
 
   const eventDeletedHandler = async (id, number, month, year) => {
     try {
-      await sendRequest("/api/event/" + id, "delete", null, {
+      await sendRequest(`/api/event/${id}`, "delete", null, {
         Authorization: "Bearer " + token,
       });
       console.log("start deleteCard");
