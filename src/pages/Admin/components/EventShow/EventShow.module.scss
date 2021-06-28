@@ -1,15 +1,16 @@
-@import "../../../../shared/scss/mixins";
+@use "../../../../shared/scss/mixins" as m;
+@use "../../../../shared/scss/fontSize" as f;
 
 .EventDiv {
-  @include box($max-padding: 50px, $grow: 7.5vw);
+  @include m.box($max-padding: 50px, $grow: 7.5vw);
 }
 
 .h2 {
-  @include responsive-font(20px, $font-max-h2, 7.8vw);
+  @include f.responsive-font(20px, f.$font-max-h2, 7.8vw);
 }
 
 .h2Small {
-  @include responsive-font(20px, 30px, 7.8vw);
+  @include f.responsive-font(20px, 30px, 7.8vw);
 }
 
 .timeDiv {
@@ -29,10 +30,10 @@
 }
 
 .error {
-  @include errorMessage();
+  @include m.errorMessage();
 }
 
 .text {
   margin-bottom: 3vh;
-  @include responsive-font($font-min-label, $font-max-label, $font-grow-label);
+  @include f.responsive-font(f.$font-min-label, f.$font-max-label, f.$font-grow-label);
 }

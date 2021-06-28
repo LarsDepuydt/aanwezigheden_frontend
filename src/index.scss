@@ -1,4 +1,4 @@
-@import "./shared/scss/fontSize";
+@use "./shared/scss/fontSize" as f;
 
 * {
   box-sizing: border-box;
@@ -21,7 +21,7 @@ header {
 p {
   max-width: 700px;
   margin: auto;
-  @include responsive-font($font-min-p, $font-max-p);
+  @include f.responsive-font(f.$font-min-p, f.$font-max-p);
 }
 
 h1 {
@@ -29,15 +29,15 @@ h1 {
 }
 
 h2 {
-  @include responsive-font($font-min-h2, $font-max-h2, $font-grow-h2);
+  @include f.responsive-font(f.$font-min-h2, f.$font-max-h2, f.$font-grow-h2);
 }
 
 h3 {
-  @include responsive-font($font-min-h3, $font-max-h3);
+  @include f.responsive-font(f.$font-min-h3, f.$font-max-h3);
 }
 
 h4 {
-  @include responsive-font($font-min-h4, $font-max-h4);
+  @include f.responsive-font(f.$font-min-h4, f.$font-max-h4);
 }
 
 @media (max-width: 500px) {

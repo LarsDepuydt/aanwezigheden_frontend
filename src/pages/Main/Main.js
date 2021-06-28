@@ -32,9 +32,8 @@ const Main = () => {
         if (responseData.events.aanwezig.length !== 0) {
           for (const event of responseData.events.aanwezig) {
             event.state = 1;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;
@@ -45,9 +44,8 @@ const Main = () => {
         if (responseData.events.afwezig.length !== 0) {
           for (const event of responseData.events.afwezig) {
             event.state = 0;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;
@@ -58,9 +56,8 @@ const Main = () => {
         if (responseData.events.onbepaald.length !== 0) {
           for (const event of responseData.events.onbepaald) {
             event.state = 2;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;

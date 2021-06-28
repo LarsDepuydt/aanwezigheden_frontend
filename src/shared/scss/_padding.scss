@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $padding-max: 45px;
 $padding-min: 10px;
 $padding-grow: 10vw;
@@ -22,16 +24,16 @@ $padding-grow-box: 5vw;
 $padding-verhouding-box: 1/2;
 
 @mixin responsive-padding($min, $max: false, $responsive: 10vw, $verhouding: 6/12, $fallback: false) {
-  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
   $dimension: if(unit($responsive) == "vh", "height", "width");
-  $min-breakpoint: $min / $responsive-unitless * 100;
+  $min-breakpoint: math.div($min, $responsive-unitless * 100);
 
   @media (max-#{$dimension}: #{$min-breakpoint}) {
     padding: ($min * $verhouding) $min;
   }
 
   @if $max {
-    $max-breakpoint: $max / $responsive-unitless * 100;
+    $max-breakpoint: math.div($max, $responsive-unitless * 100);
 
     @media (min-#{$dimension}: #{$max-breakpoint}) {
       padding: ($max * $verhouding) $max;

@@ -1,13 +1,13 @@
-@import "../../shared/scss/values";
-@import "../../shared/scss/mixins";
+@use "../../shared/scss/values" as v;
+@use "../../shared/scss/mixins" as m;
 
 .verenigingDiv {
   margin: 10vmin auto 0 auto;
   width: 100%;
   max-width: 550px;
-  border-radius: $borderRadius;
+  border-radius: v.$borderRadius;
   padding: 20px;
-  @include box-shadow();
+  @include m.box-shadow();
 
   h2 {
     margin-bottom: 7vmin;
@@ -29,7 +29,7 @@
   }
 
   .error {
-    @include errorMessage();
+    @include m.errorMessage();
   }
 }
 

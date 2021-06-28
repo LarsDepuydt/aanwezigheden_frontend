@@ -30,7 +30,7 @@ const Datum = (props) => {
   const id = event._id;
 
   return (
-    <div className={classes.DatumDiv}>
+    <div className={[classes.DatumDiv, event.past && classes.past].join(" ")}>
       <div>
         <p className={classes.day}>{getDay(event.date)}</p>
         <p className={classes.date}>{event.date.getDate()}</p>
@@ -40,6 +40,7 @@ const Datum = (props) => {
         name={event.name}
         date={event.date}
         state={event.state}
+        past={event.past}
         allAanwezigheden={event.allAanwezigheden}
         changeValue={(value) => props.changeValue(value, id)}
         changeValueHandler={() => props.changeValueHandler(id)}

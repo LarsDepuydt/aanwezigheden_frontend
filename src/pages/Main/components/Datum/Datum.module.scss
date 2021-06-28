@@ -1,4 +1,5 @@
-@import "../../../../shared/scss/fontSize";
+@use "../../../../shared/scss/fontSize" as f;
+@use "../../../../shared/scss/values" as v;
 
 .DatumDiv {
   display: flex;
@@ -11,12 +12,16 @@
     font-weight: 500;
     margin: 0;
     margin-top: 20px;
-    @include responsive-font($font-min-label, $font-max-label, $font-grow-label);
+    @include f.responsive-font(f.$font-min-label, f.$font-max-label, f.$font-grow-label);
   }
 
   .date {
     font-weight: 500;
     margin-top: 10px;
-    @include responsive-font($font-min-number, $font-max-number, $font-grow-number);
+    @include f.responsive-font(f.$font-min-number, f.$font-max-number, f.$font-grow-number);
   }
+}
+
+.past {
+  opacity: v.$opacityPast;
 }
