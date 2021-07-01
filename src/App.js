@@ -73,7 +73,7 @@ const App = () => {
     >
       <Router>
         <header>
-          <h1>Aanwezigheden Chiro Skippy</h1>
+          <h1>Aanwezigheden</h1>
         </header>
         {token && <Navigation />}
         <main>{routes}</main>

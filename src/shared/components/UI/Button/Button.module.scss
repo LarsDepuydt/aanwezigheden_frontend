@@ -2,17 +2,10 @@
 @use "../../../scss/fontSize" as f;
 @use "../../../scss/padding" as p;
 @use "../../../scss/values" as v;
+@use "../../../scss/mixins" as m;
 
 .Button {
-  margin: 1em auto;
-  font-weight: 700;
-  border: none;
-  border-radius: v.$borderRadius;
-  letter-spacing: 0.4px;
-  cursor: pointer;
-  outline: none;
-  @include f.responsive-font(f.$font-min-b, f.$font-max-b, f.$font-grow-b);
-  @include p.responsive-padding(p.$padding-min, p.$padding-max, p.$padding-grow);
+  @include m.btnStandaard();
 }
 
 .positive {
@@ -60,14 +53,12 @@
 
 // type: link
 .link:not([disabled]) {
-  background-color: c.$btnLinkColor;
-  display: block;
-  margin-top: 0;
+  @include m.link();
 }
 
 .link:not([disabled]):focus,
 .link:not([disabled]):hover {
-  background-color: c.$btnLinkHoverColor;
+  @include m.linkFocus();
 }
 
 // type: svg
@@ -91,8 +82,7 @@
 }
 
 .small {
-  @include f.responsive-font(f.$font-min-bl, f.$font-max-bl, f.$font-grow-bl);
-  @include p.responsive-padding(p.$padding-min-link, p.$padding-max-link, p.$padding-grow-link);
+  @include m.small();
 }
 
 // delete button

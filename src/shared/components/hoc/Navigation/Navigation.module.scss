@@ -1,6 +1,6 @@
+@use "../../../scss/mixins" as m;
+
 .nav {
-  display: flex;
-  flex-direction: row-reverse;
   margin: 1vh 3vw;
   position: fixed;
   top: 0;
@@ -11,8 +11,31 @@
   margin-top: 0;
   margin-left: 0;
   margin-right: 0;
+  z-index: 110;
 
-  button {
+  .ul {
     margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    height: 100%;
+
+    .li {
+      list-style: none;
+
+      .navItem:not([disabled]) {
+        text-decoration: none;
+        @include m.btnStandaard();
+        @include m.link();
+        @include m.small();
+      }
+
+      .navItem:not([disabled]):focus,
+      .navItem:not([disabled]):hover {
+        @include m.linkFocus();
+      }
+    }
   }
 }
