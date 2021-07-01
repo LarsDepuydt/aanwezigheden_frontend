@@ -2,13 +2,27 @@ import { useState, useCallback } from "react";
 
 export const useEventsSort = () => {
   const [events, setEvents] = useState({});
+  const [focusedEvent, setFocusedEvent] = useState(null);
+  const [closedAfstandState, setClosedAfstandState] = useState(null);
 
   const sortArrayByDate = useCallback((eventsArray, startEventsObj) => {
     let yearsObject = startEventsObj;
 
+    let closedAfstand = null;
+    let id = null;
     for (const event of eventsArray) {
       const date = new Date(event.date);
       event.date = date;
+
+      const today = new Date();
+      const afstandToToday = date.getTime() - today.getTime();
+      if (
+        closedAfstand === null ||
+        (closedAfstand > afstandToToday && afstandToToday >= 0)
+      ) {
+        closedAfstand = afstandToToday;
+        id = event._id;
+      }
 
       if (!yearsObject.hasOwnProperty(date.getFullYear())) {
         yearsObject[date.getFullYear()] = {};
@@ -74,6 +88,9 @@ export const useEventsSort = () => {
       }
     }
 
+    setFocusedEvent(id);
+    setClosedAfstandState(closedAfstand);
+
     setEvents(yearsObject);
   }, []);
 
@@ -85,6 +102,16 @@ export const useEventsSort = () => {
       obj.name !== updatedEvent["name"] ||
       obj.date.toISOString() !== updatedEvent["date"].toISOString()
     ) {
+      const today = new Date();
+      const afstandToToday = obj.date.getTime() - today.getTime();
+      if (
+        closedAfstandState === null ||
+        (closedAfstandState > afstandToToday && afstandToToday >= 0)
+      ) {
+        setFocusedEvent(obj._id);
+        setClosedAfstandState(afstandToToday);
+      }
+
       updatedEvent["name"] = obj.name;
       updatedEvent["date"] = obj.date;
 
@@ -122,25 +149,24 @@ export const useEventsSort = () => {
     const newMonthArray = events[year][month];
 
     let newEvents;
-    if (newMonthArray.length > 1) {
-      console.log("entry in month");
+    if (newMonthArray.length >= 2) {
+      // delete event
       newMonthArray.splice(number, number + 1);
       newEvents = {
         ...events,
         [year]: { ...events[year], [month]: newMonthArray },
       };
-    } else if (Object.keys(events).length <= 1) {
-      console.log("empty");
-      newEvents = {};
-    } else if (Object.keys(events[year]).length <= 1) {
-      console.log("delete year");
-      newEvents = events;
+    } else if (Object.keys(events[year]).length >= 2) {
+      // delete maand
+      newEvents = { ...events };
+      delete newEvents[year][month];
+    } else if (Object.keys(events).length >= 2) {
+      // delete jaar
+      newEvents = { ...events };
       delete newEvents[year];
     } else {
-      console.log("delete month");
-      console.log(Object.keys(events[year]).length);
-      newEvents = events;
-      delete newEvents[year][month];
+      // delete all
+      newEvents = {};
     }
 
     setEvents(newEvents);
@@ -148,6 +174,7 @@ export const useEventsSort = () => {
 
   return {
     events,
+    focusedEvent,
     sortArrayByDate,
     resortOneDateArray,
     updateCardInfo,

@@ -1,6 +1,6 @@
-@import "../../../../scss/fontSize";
-@import "../../../../scss/values";
-@import "../../../../scss/mixins";
+@use "../../../../scss/fontSize" as f;
+@use "../../../../scss/values" as v;
+@use "../../../../scss/mixins" as m;
 
 .Label {
   display: block;
@@ -9,19 +9,19 @@
   margin: 0 auto;
   padding-left: 0.5em;
   color: rgb(26, 26, 26);
-  @include responsive-font($font-min-label, $font-max-label, $font-grow-label);
+  @include f.responsive-font(f.$font-min-label, f.$font-max-label, f.$font-grow-label);
 }
 
 .Input {
   border: 1px solid #ccc;
-  border-radius: $borderRadius;
+  border-radius: v.$borderRadius;
   padding: 0.6em 0.8em;
   margin: 0 auto;
   outline: none;
   display: block;
   width: 100%;
   margin: 0;
-  @include responsive-font($font-min-input, $font-max-input, $font-grow-input);
+  @include f.responsive-font(f.$font-min-input, f.$font-max-input, f.$font-grow-input);
 }
 
 .Input[type="password"] {
@@ -61,7 +61,7 @@
 }
 
 .errorMessage {
-  @include errorMessage();
+  @include m.errorMessage();
 
   margin: 1vh auto 2vh auto;
 }

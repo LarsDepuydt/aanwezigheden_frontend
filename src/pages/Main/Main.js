@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useEventsSort } from "../../shared/hooks/events-hook";
@@ -14,6 +14,7 @@ const Main = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const {
     events,
+    focusedEvent,
     sortArrayByDate,
     resortOneDateArray,
     updateCardInfo,
@@ -32,9 +33,8 @@ const Main = () => {
         if (responseData.events.aanwezig.length !== 0) {
           for (const event of responseData.events.aanwezig) {
             event.state = 1;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;
@@ -45,9 +45,8 @@ const Main = () => {
         if (responseData.events.afwezig.length !== 0) {
           for (const event of responseData.events.afwezig) {
             event.state = 0;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;
@@ -58,9 +57,8 @@ const Main = () => {
         if (responseData.events.onbepaald.length !== 0) {
           for (const event of responseData.events.onbepaald) {
             event.state = 2;
-            event.touched = false;
             const today = new Date();
-            if (today > event.date) {
+            if (today.toISOString() < event.date) {
               event.past = false;
             } else {
               event.past = true;
@@ -136,10 +134,8 @@ const Main = () => {
       await sendRequest(`/api/event/${id}`, "delete", null, {
         Authorization: "Bearer " + token,
       });
-      console.log("start deleteCard");
+
       deleteCard(number, month, year);
-      console.log("end deleteCard");
-      console.log(events);
     } catch (err) {}
   };
 
@@ -157,10 +153,11 @@ const Main = () => {
   let years;
   if (Object.keys(events).length > 0) {
     const keys = Object.keys(events);
-    years = keys.map((year) => (
+    years = keys.map((year, i) => (
       <Year
         key={year}
         year={year}
+        focusedEvent={focusedEvent}
         months={events[year]}
         changeValue={cardStateChangeHandler}
         changeValueHandler={cardStateChangeValueHandler}

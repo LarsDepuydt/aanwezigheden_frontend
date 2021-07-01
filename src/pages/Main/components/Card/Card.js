@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../../shared/hooks/auth-context";
 import { useHttpClient } from "../../../../shared/hooks/http-hook";
 
@@ -60,7 +60,7 @@ const Card = (props) => {
   const date =
     props.date.getFullYear() +
     "-" +
-    props.date.getMonth() +
+    (props.date.getMonth() + 1) +
     "-" +
     props.date.getDate();
   const hour = ("0" + props.date.getHours()).slice(-2);
@@ -71,13 +71,11 @@ const Card = (props) => {
       {!aanpassen && (
         <>
           <h4>{text}</h4>
-          {!auth.admin && (
-            <UserBtn
-              value={value}
-              changeValueHandler={props.changeValueHandler}
-              changeValue={props.changeValue}
-            />
-          )}
+          <UserBtn
+            value={value}
+            changeValueHandler={props.changeValueHandler}
+            changeValue={props.changeValue}
+          />
           {!error && (
             <Button small btnType="link" clicked={getAllAanwezighedenHandler}>
               {!allAanwezigheden

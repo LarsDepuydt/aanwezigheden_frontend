@@ -34,12 +34,22 @@ const maandtext = (month) => {
 };
 
 const Month = (props) => {
+  const firstNextMonth = new Date(
+    props.year,
+    parseInt(props.monthNumber) + 1,
+    1
+  );
+  const today = new Date();
+  let past;
+  firstNextMonth <= today ? (past = true) : (past = false);
+
   let events;
   if (props.events.length !== 0) {
-    events = props.events.map((event) => (
+    events = props.events.map((event, i) => (
       <Datum
         key={event._id}
         event={event}
+        focusedEvent={props.focusedEvent}
         changeValue={(v, id) =>
           props.changeValue(
             v,
@@ -79,7 +89,7 @@ const Month = (props) => {
   }
 
   return (
-    <div className={classes.MonthDiv}>
+    <div className={[classes.MonthDiv, past && classes.past].join(" ")}>
       <h3 className={classes.h3}>{maandtext(props.monthNumber)}</h3>
       {events}
     </div>

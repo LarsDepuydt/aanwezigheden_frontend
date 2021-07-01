@@ -8,6 +8,7 @@ import SignInUp from "./pages/SignInUp/SignInUp";
 import Main from "./pages/Main/Main";
 import NewEvent from "./pages/Admin/NewEvent/NewEvent";
 import Navigation from "./shared/components/hoc/Navigation/Navigation";
+import Footer from "./pages/Footer/Footer";
 
 const App = () => {
   const { token, admin, login, logout, userId, vereniging } = useAuth();
@@ -73,11 +74,13 @@ const App = () => {
     >
       <Router>
         <header>
-          <h1>Aanwezigheden Chiro Skippy</h1>
+          <h1>Aanwezigheden</h1>
         </header>
         {token && <Navigation />}
         <main>{routes}</main>
-        <footer></footer>
+        <footer>
+          <Footer />
+        </footer>
       </Router>
     </AuthContext.Provider>
   );

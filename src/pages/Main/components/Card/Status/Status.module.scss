@@ -1,4 +1,5 @@
-@import "../../../../../shared/scss/fontSize";
+@use "sass:math";
+@use "../../../../../shared/scss/fontSize" as f;
 
 $height: 50px;
 
@@ -31,7 +32,7 @@ $height: 50px;
 
   .label {
     margin: auto;
-    @include responsive-font($font-min-label, $font-max-label);
+    @include f.responsive-font(f.$font-min-label, f.$font-max-label);
     font-weight: 500;
     user-select: none;
     -ms-user-selec: none;
@@ -71,7 +72,7 @@ $height: 50px;
 .change {
   position: absolute;
   right: 40px;
-  top: calc((#{$height} - 21px) / 2);
+  top: math.div(calc(#{$height} - 21px), 2);
   font-size: 17px;
   margin: 0;
 }

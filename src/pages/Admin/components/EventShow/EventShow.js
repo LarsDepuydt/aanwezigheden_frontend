@@ -80,7 +80,7 @@ const EventShow = (props) => {
       const timeArray = eventState.time.value.split(":");
       const dateObj = new Date(
         dateArray[0],
-        dateArray[1],
+        dateArray[1] - 1,
         dateArray[2],
         timeArray[0],
         timeArray[1]

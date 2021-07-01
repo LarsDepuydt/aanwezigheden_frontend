@@ -1,11 +1,16 @@
 .adminBtnDiv {
   display: flex;
-  justify-content: flex-end;
-  gap: 20px;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 4vh;
 
-  .svgDiv {
-    min-width: 30px;
-    width: 10vw;
-    max-width: 40px;
+  .hoverDiv {
+    display: flex;
+
+    .svgDiv {
+      min-width: 30px;
+      width: 10vw;
+      max-width: 40px;
+    }
   }
 }

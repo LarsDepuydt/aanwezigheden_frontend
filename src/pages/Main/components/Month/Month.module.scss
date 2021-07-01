@@ -1,7 +1,7 @@
-@import "../../../../shared/scss/values";
+@use "../../../../shared/scss/values" as v;
 
 .MonthDiv {
-  max-width: calc(#{$cardWith} + 60px);
+  max-width: calc(#{v.$cardWith} + 60px);
   margin: 5vh auto 0 auto;
 
   .h3 {
@@ -10,5 +10,5 @@
 }
 
 .past {
-  opacity: $opacityPast;
+  opacity: v.$opacityPast;
 }

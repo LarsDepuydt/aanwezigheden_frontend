@@ -1,5 +1,5 @@
+import { useRef, useEffect } from "react";
 import Card from "../Card/Card";
-
 import classes from "./Datum.module.scss";
 
 const getDay = (date) => {
@@ -26,12 +26,22 @@ const getDay = (date) => {
 };
 
 const Datum = (props) => {
-  const { event } = props;
+  const { event, focusedEvent } = props;
   const id = event._id;
+  const refFocus = useRef();
+
+  useEffect(() => {
+    if (focusedEvent === id) {
+      refFocus.current.scrollIntoView({
+        block: "center",
+        inline: "center",
+      });
+    }
+  }, [focusedEvent, id]);
 
   return (
-    <div className={classes.DatumDiv}>
-      <div>
+    <div className={[classes.DatumDiv, event.past && classes.past].join(" ")}>
+      <div ref={refFocus}>
         <p className={classes.day}>{getDay(event.date)}</p>
         <p className={classes.date}>{event.date.getDate()}</p>
       </div>
@@ -40,6 +50,7 @@ const Datum = (props) => {
         name={event.name}
         date={event.date}
         state={event.state}
+        past={event.past}
         allAanwezigheden={event.allAanwezigheden}
         changeValue={(value) => props.changeValue(value, id)}
         changeValueHandler={() => props.changeValueHandler(id)}

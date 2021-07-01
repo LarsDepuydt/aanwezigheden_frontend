@@ -1,4 +1,5 @@
-@import "../../../../scss/values";
+@use "sass:math";
+@use "../../../../scss/values" as v;
 
 $color: black;
 
@@ -30,6 +31,6 @@ $color: black;
 
 .backdrop {
   position: absolute;
-  top: calc((#{$heightSpinnerBox} - 100px) / 2);
-  left: calc((#{$widthSpinnerBox} - 100px) / 2);
+  top: math.div(calc((#{v.$heightSpinnerBox} - 100px)), 2);
+  left: math.div(calc((#{v.$widthSpinnerBox} - 100px)), 2);
 }

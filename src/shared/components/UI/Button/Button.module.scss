@@ -1,106 +1,106 @@
-@import "../../../scss/sharedColors";
-@import "../../../scss/fontSize";
-@import "../../../scss/padding";
-@import "../../../scss/values";
+@use "../../../scss/sharedColors" as c;
+@use "../../../scss/fontSize" as f;
+@use "../../../scss/padding" as p;
+@use "../../../scss/values" as v;
+@use "../../../scss/mixins" as m;
 
 .Button {
-  margin: 1em auto;
-  font-weight: 700;
-  border: none;
-  border-radius: $borderRadius;
-  letter-spacing: 0.4px;
-  cursor: pointer;
-  outline: none;
-  @include responsive-font($font-min-b, $font-max-b, $font-grow-b);
-  @include responsive-padding($padding-min, $padding-max, $padding-grow);
+  @include m.btnStandaard();
 }
 
 .positive {
   margin: auto 0;
   background-color: green;
-  @include responsive-padding($padding-min-janee, $padding-max-janee, $padding-grow-janee, $padding-verhouding-janee);
+  @include p.responsive-padding(
+    p.$padding-min-janee,
+    p.$padding-max-janee,
+    p.$padding-grow-janee,
+    p.$padding-verhouding-janee
+  );
 }
 
 .negative {
   margin: auto 0;
   background-color: red;
-  @include responsive-padding($padding-min-janee, $padding-max-janee, $padding-grow-janee, $padding-verhouding-janee);
+  @include p.responsive-padding(
+    p.$padding-min-janee,
+    p.$padding-max-janee,
+    p.$padding-grow-janee,
+    p.$padding-verhouding-janee
+  );
 }
 
 // type: primary
 .primary:not([disabled]) {
-  background-color: $btnPrimBackground;
-  color: $btnPrimColor;
+  background-color: c.$btnPrimBackground;
+  color: c.$btnPrimColor;
 }
 
 .primary:not([disabled]):focus,
 .primary:not([disabled]):hover {
-  background-color: $btnPrimHoverBackground;
+  background-color: c.$btnPrimHoverBackground;
 }
 
 // type: secondary
 .secondary:not([disabled]) {
-  background-color: $btnSecColor;
+  background-color: c.$btnSecColor;
 }
 
 .secondary:not([disabled]):focus,
 .secondary:not([disabled]):hover {
-  background-color: $btnSecHoverColor;
+  background-color: c.$btnSecHoverColor;
 }
 
 // type: link
 .link:not([disabled]) {
-  background-color: $btnLinkColor;
-  display: block;
-  margin-top: 0;
+  @include m.link();
 }
 
 .link:not([disabled]):focus,
 .link:not([disabled]):hover {
-  background-color: $btnLinkHoverColor;
+  @include m.linkFocus();
 }
 
 // type: svg
 .svg:not([disabled]) {
-  background-color: $btnDeleteColor;
+  background-color: c.$btnDeleteColor;
   display: block;
   margin: 0;
-  @include responsive-padding(
-    $padding-min-delete,
-    $padding-max-delete,
-    $padding-grow-delete,
-    $padding-verhouding-delete
+  @include p.responsive-padding(
+    p.$padding-min-delete,
+    p.$padding-max-delete,
+    p.$padding-grow-delete,
+    p.$padding-verhouding-delete
   );
 }
 
 .Button:disabled,
 .disabledS {
-  color: $btnDisabledColor;
-  background-color: $btnDisabledBackgroundColor;
+  color: c.$btnDisabledColor;
+  background-color: c.$btnDisabledBackgroundColor;
   cursor: not-allowed;
 }
 
 .small {
-  @include responsive-font($font-min-bl, $font-max-bl, $font-grow-bl);
-  @include responsive-padding($padding-min-link, $padding-max-link, $padding-grow-link);
+  @include m.small();
 }
 
 // delete button
 .delete:not([disabled]) {
-  background-color: $btnDeleteColor;
+  background-color: c.$btnDeleteColor;
 }
 
 .delete:not([disabled]):focus,
 .delete:not([disabled]):hover {
-  background-color: $btnDeleteHoverColor;
+  background-color: c.$btnDeleteHoverColor;
 }
 
 // edit button
 .edit:not([disabled]) {
-  background-color: $btnEditColor;
+  background-color: c.$btnEditColor;
 }
 
 .edit:not([disabled]):focus,
 .edit:not([disabled]):hover {
-  background-color: $btnEditHoverColor;
+  background-color: c.$btnEditHoverColor;
 }

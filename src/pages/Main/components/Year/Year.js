@@ -1,6 +1,12 @@
 import Month from "../Month/Month";
+import classes from "./Year.module.scss";
 
 const Year = (props) => {
+  const nextYear = new Date(parseInt(props.year) + 1, 0, 1);
+  const today = new Date();
+  let past;
+  nextYear <= today ? (past = true) : (past = false);
+
   let months;
   if (props.months.length !== 0) {
     const keys = Object.keys(props.months);
@@ -10,6 +16,7 @@ const Year = (props) => {
         year={props.year}
         monthNumber={month}
         events={props.months[month]}
+        focusedEvent={props.focusedEvent}
         changeValue={(v, id, n, m) =>
           props.changeValue(v, id, n, m, props.year)
         }
@@ -27,10 +34,10 @@ const Year = (props) => {
     ));
   }
   return (
-    <>
+    <div className={[past && classes.past].join(" ")}>
       <h3>{props.year}</h3>
       {months}
-    </>
+    </div>
   );
 };
 
