@@ -2,13 +2,27 @@ import { useState, useCallback } from "react";
 
 export const useEventsSort = () => {
   const [events, setEvents] = useState({});
+  const [focusedEvent, setFocusedEvent] = useState(null);
+  const [closedAfstandState, setClosedAfstandState] = useState(null);
 
   const sortArrayByDate = useCallback((eventsArray, startEventsObj) => {
     let yearsObject = startEventsObj;
 
+    let closedAfstand = null;
+    let id = null;
     for (const event of eventsArray) {
       const date = new Date(event.date);
       event.date = date;
+
+      const today = new Date();
+      const afstandToToday = date.getTime() - today.getTime();
+      if (
+        closedAfstand === null ||
+        (closedAfstand > afstandToToday && afstandToToday >= 0)
+      ) {
+        closedAfstand = afstandToToday;
+        id = event._id;
+      }
 
       if (!yearsObject.hasOwnProperty(date.getFullYear())) {
         yearsObject[date.getFullYear()] = {};
@@ -74,6 +88,9 @@ export const useEventsSort = () => {
       }
     }
 
+    setFocusedEvent(id);
+    setClosedAfstandState(closedAfstand);
+
     setEvents(yearsObject);
   }, []);
 
@@ -85,6 +102,16 @@ export const useEventsSort = () => {
       obj.name !== updatedEvent["name"] ||
       obj.date.toISOString() !== updatedEvent["date"].toISOString()
     ) {
+      const today = new Date();
+      const afstandToToday = obj.date.getTime() - today.getTime();
+      if (
+        closedAfstandState === null ||
+        (closedAfstandState > afstandToToday && afstandToToday >= 0)
+      ) {
+        setFocusedEvent(obj._id);
+        setClosedAfstandState(afstandToToday);
+      }
+
       updatedEvent["name"] = obj.name;
       updatedEvent["date"] = obj.date;
 
@@ -147,6 +174,7 @@ export const useEventsSort = () => {
 
   return {
     events,
+    focusedEvent,
     sortArrayByDate,
     resortOneDateArray,
     updateCardInfo,

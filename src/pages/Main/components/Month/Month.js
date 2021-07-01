@@ -45,10 +45,11 @@ const Month = (props) => {
 
   let events;
   if (props.events.length !== 0) {
-    events = props.events.map((event) => (
+    events = props.events.map((event, i) => (
       <Datum
         key={event._id}
         event={event}
+        focusedEvent={props.focusedEvent}
         changeValue={(v, id) =>
           props.changeValue(
             v,

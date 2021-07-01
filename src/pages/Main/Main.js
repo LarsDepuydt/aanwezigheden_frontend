@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useEventsSort } from "../../shared/hooks/events-hook";
@@ -14,6 +14,7 @@ const Main = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const {
     events,
+    focusedEvent,
     sortArrayByDate,
     resortOneDateArray,
     updateCardInfo,
@@ -70,7 +71,7 @@ const Main = () => {
       } catch (err) {}
     };
     fetchEvents();
-  }, [sendRequest, token, vereniging]);
+  }, [sendRequest, token, vereniging, sortArrayByDate]);
 
   const cardStateChangeValueHandler = (id, number, month, year) => {
     const oldValue = events[year][month][number].state;
@@ -152,10 +153,11 @@ const Main = () => {
   let years;
   if (Object.keys(events).length > 0) {
     const keys = Object.keys(events);
-    years = keys.map((year) => (
+    years = keys.map((year, i) => (
       <Year
         key={year}
         year={year}
+        focusedEvent={focusedEvent}
         months={events[year]}
         changeValue={cardStateChangeHandler}
         changeValueHandler={cardStateChangeValueHandler}
