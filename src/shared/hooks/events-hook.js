@@ -2,14 +2,35 @@ import { useState, useCallback } from "react";
 
 export const useEventsSort = () => {
   const [events, setEvents] = useState({});
+  const [focusedEvent, setFocusedEvent] = useState(null);
+  const [closedAfstandState, setClosedAfstandState] = useState(null);
 
   const sortArrayByDate = useCallback((eventsArray, startEventsObj) => {
-    console.log("called");
     let yearsObject = startEventsObj;
 
+    let posClosedAfstand = null;
+    let posId = null;
+    let negClosedAfstand = null;
+    let negId = null;
     for (const event of eventsArray) {
       const date = new Date(event.date);
       event.date = date;
+
+      const today = new Date();
+      const afstandToToday = date.getTime() - today.getTime();
+      if (
+        afstandToToday >= 0 &&
+        (posClosedAfstand === null || posClosedAfstand > afstandToToday)
+      ) {
+        posClosedAfstand = afstandToToday;
+        posId = event._id;
+      } else if (
+        afstandToToday < 0 &&
+        (negClosedAfstand === null || negClosedAfstand < afstandToToday)
+      ) {
+        negClosedAfstand = afstandToToday;
+        negId = event._id;
+      }
 
       if (!yearsObject.hasOwnProperty(date.getFullYear())) {
         yearsObject[date.getFullYear()] = {};
@@ -75,6 +96,14 @@ export const useEventsSort = () => {
       }
     }
 
+    if (posClosedAfstand !== null) {
+      setFocusedEvent(posId);
+      setClosedAfstandState(posClosedAfstand);
+    } else {
+      setFocusedEvent(negId);
+      setClosedAfstandState(negClosedAfstand);
+    }
+
     setEvents(yearsObject);
   }, []);
 
@@ -86,6 +115,17 @@ export const useEventsSort = () => {
       obj.name !== updatedEvent["name"] ||
       obj.date.toISOString() !== updatedEvent["date"].toISOString()
     ) {
+      const today = new Date();
+      const afstandToToday = obj.date.getTime() - today.getTime();
+      if (
+        closedAfstandState === null ||
+        (closedAfstandState > afstandToToday && afstandToToday >= 0) ||
+        (closedAfstandState < 0 && afstandToToday >= 0)
+      ) {
+        setFocusedEvent(obj._id);
+        setClosedAfstandState(afstandToToday);
+      }
+
       updatedEvent["name"] = obj.name;
       updatedEvent["date"] = obj.date;
 
@@ -119,5 +159,39 @@ export const useEventsSort = () => {
     setEvents(newEvents);
   };
 
-  return { events, sortArrayByDate, resortOneDateArray, updateCardInfo };
+  const deleteCard = (number, month, year) => {
+    const newMonthArray = events[year][month];
+
+    let newEvents;
+    if (newMonthArray.length >= 2) {
+      // delete event
+      newMonthArray.splice(number, number + 1);
+      newEvents = {
+        ...events,
+        [year]: { ...events[year], [month]: newMonthArray },
+      };
+    } else if (Object.keys(events[year]).length >= 2) {
+      // delete maand
+      newEvents = { ...events };
+      delete newEvents[year][month];
+    } else if (Object.keys(events).length >= 2) {
+      // delete jaar
+      newEvents = { ...events };
+      delete newEvents[year];
+    } else {
+      // delete all
+      newEvents = {};
+    }
+
+    setEvents(newEvents);
+  };
+
+  return {
+    events,
+    focusedEvent,
+    sortArrayByDate,
+    resortOneDateArray,
+    updateCardInfo,
+    deleteCard,
+  };
 };

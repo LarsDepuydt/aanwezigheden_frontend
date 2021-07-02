@@ -13,10 +13,10 @@ const UserBtn = (props) => {
       )}
       {value === 2 && (
         <div className={classes.BtnDiv}>
-          <Button btnType={"positive"} clicked={() => props.changeState(1)}>
+          <Button btnType={"positive"} clicked={() => props.changeValue(1)}>
             Aanwezig
           </Button>
-          <Button btnType={"negative"} clicked={() => props.changeState(0)}>
+          <Button btnType={"negative"} clicked={() => props.changeValue(0)}>
             Afwezig
           </Button>
         </div>

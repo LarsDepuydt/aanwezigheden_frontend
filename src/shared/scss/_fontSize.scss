@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // text settings
 // p
 $font-min-p: 13px;
@@ -37,16 +39,16 @@ $font-max-bl: 16px;
 $font-grow-bl: 5vw;
 
 @mixin responsive-font($min, $max: false, $responsive: 3vw, $fallback: false) {
-  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
   $dimension: if(unit($responsive) == "vh", "height", "width");
-  $min-breakpoint: $min / $responsive-unitless * 100;
+  $min-breakpoint: math.div($min, $responsive-unitless * 100);
 
   @media (max-#{$dimension}: #{$min-breakpoint}) {
     font-size: $min;
   }
 
   @if $max {
-    $max-breakpoint: $max / $responsive-unitless * 100;
+    $max-breakpoint: math.div($max, $responsive-unitless * 100);
 
     @media (min-#{$dimension}: #{$max-breakpoint}) {
       font-size: $max;

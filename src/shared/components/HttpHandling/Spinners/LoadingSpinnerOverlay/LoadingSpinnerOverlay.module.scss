@@ -1,11 +1,15 @@
-@import "../../../../scss/values";
+@use "sass:math";
+@use "../../../../scss/values" as v;
 
 .loadingDiv {
   position: absolute;
-  left: calc((100vw - #{$widthSpinnerBox}) / 2);
-  top: calc((100vh - #{$heightSpinnerBox}) / 2);
-  width: $widthSpinnerBox;
-  height: $heightSpinnerBox;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: v.$widthSpinnerBox;
+  height: v.$heightSpinnerBox;
   background-color: white;
   z-index: 100;
   border-radius: 10px;

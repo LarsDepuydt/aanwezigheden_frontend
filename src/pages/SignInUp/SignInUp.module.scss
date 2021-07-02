@@ -1,7 +1,7 @@
-@import "../../shared/scss/mixins";
+@use "../../shared/scss/mixins" as m;
 
 .signupDiv {
-  @include box();
+  @include m.box();
 
   h2 {
     margin-bottom: 7vmin;
@@ -23,6 +23,6 @@
   }
 
   .error {
-    @include errorMessage();
+    @include m.errorMessage();
   }
 }

@@ -1,0 +1,15 @@
+@use "../../../../../shared/scss/fontSize" as f;
+
+.Label {
+  display: block;
+  font-weight: 600;
+  margin: 0 auto;
+  padding-left: 0.5em;
+  @include f.responsive-font(f.$font-min-label, f.$font-max-label, f.$font-grow-label);
+}
+
+.Ul {
+  display: inline-block;
+  margin: 1vh auto 2vh auto;
+  padding: 0;
+}

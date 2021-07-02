@@ -56,10 +56,10 @@ const NieuweVeringing = () => {
     clearError();
   };
 
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
-  const ref4 = useRef(null);
+  const ref1 = useRef();
+  const ref2 = useRef();
+  const ref3 = useRef();
+  const ref4 = useRef();
 
   const history = useHistory();
 

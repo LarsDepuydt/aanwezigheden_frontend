@@ -36,7 +36,7 @@ const SignUp = (props) => {
   const [signinInfo, dispatch] = useReducer(signinReducer, {
     voornaam: { value: "", isValid: false },
     achternaam: { value: "", isValid: false },
-    geboortejaar: { value: yearOptions[0].value, isValid: true },
+    geboortejaar: { value: yearOptions[0], isValid: true },
     password: { value: "", isValid: false },
     isValid: false,
   });
@@ -76,9 +76,9 @@ const SignUp = (props) => {
     }
   };
 
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
+  const ref1 = useRef();
+  const ref2 = useRef();
+  const ref3 = useRef();
 
   const buttonClickedHandler = async (event) => {
     event.preventDefault();
@@ -124,6 +124,7 @@ const SignUp = (props) => {
           );
         } catch (err) {}
       }
+
       history.push("/" + vname);
     } else {
       setTouchedState(true);
@@ -158,7 +159,7 @@ const SignUp = (props) => {
               childRef={ref1}
               {...(touchedState && { touched: true })}
             >
-              Voornaam lid
+              Voornaam
             </Input>
           </div>
           <div className={classes.halfDiv}>
@@ -175,7 +176,7 @@ const SignUp = (props) => {
               childRef={ref2}
               {...(touchedState && { touched: true })}
             >
-              Achternaam lid
+              Achternaam
             </Input>
           </div>
         </div>

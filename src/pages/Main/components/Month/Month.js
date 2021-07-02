@@ -34,15 +34,33 @@ const maandtext = (month) => {
 };
 
 const Month = (props) => {
+  const firstNextMonth = new Date(
+    props.year,
+    parseInt(props.monthNumber) + 1,
+    1
+  );
+  const today = new Date();
+  let past;
+  firstNextMonth <= today ? (past = true) : (past = false);
+
   let events;
   if (props.events.length !== 0) {
-    events = props.events.map((event) => (
+    events = props.events.map((event, i) => (
       <Datum
         key={event._id}
         event={event}
-        changeState={(v, id) =>
-          props.changeState(
+        focusedEvent={props.focusedEvent}
+        vandaag={props.vandaag}
+        changeValue={(v, id) =>
+          props.changeValue(
             v,
+            id,
+            props.events.indexOf(event),
+            props.monthNumber
+          )
+        }
+        changeValueHandler={(id) =>
+          props.changeValueHandler(
             id,
             props.events.indexOf(event),
             props.monthNumber
@@ -56,12 +74,23 @@ const Month = (props) => {
             props.monthNumber
           )
         }
+        eventDeleted={(id) =>
+          props.eventDeleted(id, props.events.indexOf(event), props.monthNumber)
+        }
+        getAllAanwezigheden={(show, id) =>
+          props.getAllAanwezigheden(
+            show,
+            id,
+            props.events.indexOf(event),
+            props.monthNumber
+          )
+        }
       />
     ));
   }
 
   return (
-    <div className={classes.MonthDiv}>
+    <div className={[classes.MonthDiv, past && classes.past].join(" ")}>
       <h3 className={classes.h3}>{maandtext(props.monthNumber)}</h3>
       {events}
     </div>

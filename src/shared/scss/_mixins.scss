@@ -1,6 +1,7 @@
-@import "./fontSize";
-@import "./values";
-@import "./padding";
+@use "./fontSize" as f;
+@use "./values" as v;
+@use "./padding" as p;
+@use "./sharedColors" as c;
 
 @mixin box-shadow() {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -10,19 +11,50 @@
   color: red;
   font-weight: 700;
 
-  @include responsive-font($font-min-p, $font-max-p);
+  @include f.responsive-font(f.$font-min-p, f.$font-max-p);
 }
 
-@mixin box($max-padding: $padding-max-box, $grow: $padding-grow-box) {
-  margin: 10vmin auto 0 auto;
+@mixin box($max-padding: p.$padding-max-box, $grow: p.$padding-grow-box) {
+  margin: 3vh auto auto auto;
   width: 100%;
   max-width: 550px;
-  border-radius: $borderRadius;
-  @include responsive-padding($padding-min-box, $max-padding, $grow, $padding-verhouding-box);
+  border-radius: v.$borderRadius;
+  @include p.responsive-padding(p.$padding-min-box, $max-padding, $grow, p.$padding-verhouding-box);
   @include box-shadow();
 
   @media (max-width: 560px) {
     width: 100%;
     box-shadow: none;
+    margin-top: 3vh;
   }
+}
+
+@mixin btnStandaard() {
+  margin: 1em auto;
+  font-weight: 500;
+  border: none;
+  border-radius: v.$borderRadius;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+
+  @include f.responsive-font(f.$font-min-b, f.$font-max-b, f.$font-grow-b);
+  @include p.responsive-padding(p.$padding-min, p.$padding-max, p.$padding-grow);
+}
+
+@mixin link() {
+  background-color: c.$btnLinkColor;
+  color: black;
+  display: block;
+  margin-top: 0;
+}
+
+@mixin linkFocus() {
+  background-color: c.$btnLinkHoverColor;
+}
+
+@mixin small() {
+  @include f.responsive-font(f.$font-min-bl, f.$font-max-bl, f.$font-grow-bl);
+  @include p.responsive-padding(p.$padding-min-link, p.$padding-max-link, p.$padding-grow-link);
 }

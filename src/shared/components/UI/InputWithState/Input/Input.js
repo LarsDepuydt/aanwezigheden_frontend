@@ -20,8 +20,8 @@ const Input = (props) => {
     );
   } else {
     const options = props.options.map((item) => (
-      <option key={item.value} value={item.value}>
-        {item.text}
+      <option key={item} value={item}>
+        {item}
       </option>
     ));
     input = (

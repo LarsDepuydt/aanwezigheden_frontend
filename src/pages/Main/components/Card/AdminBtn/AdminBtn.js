@@ -8,13 +8,19 @@ const AdminBtn = (props) => {
   return (
     <div className={classes.adminBtnDiv}>
       <Button small edit btnType="svg" clicked={props.aanpassenClicked}>
-        <div className={classes.svgDiv}>
-          <Edit />
+        <div className={classes.hoverDiv}>
+          <div className={classes.svgDiv}>
+            <Edit />
+          </div>
+          <p>Aanpassen</p>
         </div>
       </Button>
-      <Button small delete btnType="svg">
-        <div className={classes.svgDiv}>
-          <Delete />
+      <Button small delete btnType="svg" clicked={props.deleteClicked}>
+        <div className={classes.hoverDiv}>
+          <div className={classes.svgDiv}>
+            <Delete />
+          </div>
+          <p>Verwijderen</p>
         </div>
       </Button>
     </div>

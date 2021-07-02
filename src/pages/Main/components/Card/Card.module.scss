@@ -1,19 +1,15 @@
-@import "../../../../shared/scss/mixins";
-@import "../../../../shared/scss/values";
+@use "../../../../shared/scss/mixins" as m;
+@use "../../../../shared/scss/values" as v;
 
 .CardDiv {
-  @include box-shadow();
-  border-radius: $borderRadius;
+  @include m.box-shadow();
+  border-radius: v.$borderRadius;
   width: 90vw;
-  max-width: $cardWith;
+  max-width: v.$cardWith;
   padding: 2vh 2vw;
 
   h4 {
     margin-top: 2vh;
     font-weight: 500;
   }
-}
-
-.past {
-  opacity: $opacityPast;
 }
