@@ -19,11 +19,11 @@ const App = () => {
       routes = (
         <Switch>
           <Redirect from="/nieuwe-vereniging" to="/" />
-          <Route exact path={"/" + vereniging}>
-            <Main />
-          </Route>
           <Route exact path={"/" + vereniging + "/nieuw-event"}>
             <NewEvent />
+          </Route>
+          <Route exact path={"/" + vereniging}>
+            <Main />
           </Route>
           <Redirect from={"/" + vereniging} to={"/" + vereniging} />
           <Redirect to={"/" + vereniging} />

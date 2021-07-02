@@ -72,7 +72,7 @@ $height: 50px;
 .change {
   position: absolute;
   right: 40px;
-  top: math.div(calc(#{$height} - 21px), 2);
+  top: math.div($height - 21px, 2);
   font-size: 17px;
   margin: 0;
 }

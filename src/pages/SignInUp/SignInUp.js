@@ -124,6 +124,7 @@ const SignUp = (props) => {
           );
         } catch (err) {}
       }
+
       history.push("/" + vname);
     } else {
       setTouchedState(true);

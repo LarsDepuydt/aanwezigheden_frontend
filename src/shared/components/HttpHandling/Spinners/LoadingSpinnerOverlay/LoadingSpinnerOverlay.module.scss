@@ -3,8 +3,11 @@
 
 .loadingDiv {
   position: absolute;
-  left: math.div(calc((100vw - #{v.$widthSpinnerBox})), 2);
-  top: math.div(calc((100vh - #{v.$heightSpinnerBox})), 2);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   width: v.$widthSpinnerBox;
   height: v.$heightSpinnerBox;
   background-color: white;

@@ -7,7 +7,7 @@ import { AuthContext } from "../../shared/hooks/auth-context";
 import Year from "./components/Year/Year";
 import Spinner from "../../shared/components/HttpHandling/Spinners/LoadingSpinnerCenter/LoadingSpinnerCenter";
 import PageError from "../../shared/components/HttpHandling/PageError/PageError";
-import Button from "../../shared/components/UI/Button/Button";
+import GeenEvents from "./components/GeenEvents/GeenEvents";
 
 const Main = () => {
   const auth = useContext(AuthContext);
@@ -23,12 +23,13 @@ const Main = () => {
 
   const { token, vereniging } = auth;
   useEffect(() => {
+    let isMounted = true;
+
     const fetchEvents = async () => {
       try {
         const responseData = await sendRequest("api/event", "get", null, {
           Authorization: `Bearer ${token}`,
         });
-
         const eventsArray = [];
         if (responseData.events.aanwezig.length !== 0) {
           for (const event of responseData.events.aanwezig) {
@@ -67,8 +68,14 @@ const Main = () => {
           }
         }
 
-        sortArrayByDate(eventsArray, {});
+        if (isMounted) {
+          sortArrayByDate(eventsArray, {});
+        }
       } catch (err) {}
+
+      return () => {
+        isMounted = false;
+      };
     };
     fetchEvents();
   }, [sendRequest, token, vereniging, sortArrayByDate]);
@@ -183,14 +190,7 @@ const Main = () => {
         />
       )}
       {!isLoading && !error && Object.keys(events).length === 0 && (
-        <>
-          <p>Er zijn nog geen evenementen aangemaakt door je vereniging</p>
-          {auth.admin && (
-            <Button btnType="secondary" small clicked={newEventClickedHandler}>
-              Maak een event
-            </Button>
-          )}
-        </>
+        <GeenEvents clicked={newEventClickedHandler} admin={auth.admin} />
       )}
       {!isLoading && !error && years && Object.keys(events).length > 0 && years}
     </>

@@ -8,8 +8,10 @@ export const useEventsSort = () => {
   const sortArrayByDate = useCallback((eventsArray, startEventsObj) => {
     let yearsObject = startEventsObj;
 
-    let closedAfstand = null;
-    let id = null;
+    let posClosedAfstand = null;
+    let posId = null;
+    let negClosedAfstand = null;
+    let negId = null;
     for (const event of eventsArray) {
       const date = new Date(event.date);
       event.date = date;
@@ -17,11 +19,17 @@ export const useEventsSort = () => {
       const today = new Date();
       const afstandToToday = date.getTime() - today.getTime();
       if (
-        closedAfstand === null ||
-        (closedAfstand > afstandToToday && afstandToToday >= 0)
+        afstandToToday >= 0 &&
+        (posClosedAfstand === null || posClosedAfstand > afstandToToday)
       ) {
-        closedAfstand = afstandToToday;
-        id = event._id;
+        posClosedAfstand = afstandToToday;
+        posId = event._id;
+      } else if (
+        afstandToToday < 0 &&
+        (negClosedAfstand === null || negClosedAfstand < afstandToToday)
+      ) {
+        negClosedAfstand = afstandToToday;
+        negId = event._id;
       }
 
       if (!yearsObject.hasOwnProperty(date.getFullYear())) {
@@ -88,8 +96,13 @@ export const useEventsSort = () => {
       }
     }
 
-    setFocusedEvent(id);
-    setClosedAfstandState(closedAfstand);
+    if (posClosedAfstand !== null) {
+      setFocusedEvent(posId);
+      setClosedAfstandState(posClosedAfstand);
+    } else {
+      setFocusedEvent(negId);
+      setClosedAfstandState(negClosedAfstand);
+    }
 
     setEvents(yearsObject);
   }, []);
@@ -106,7 +119,8 @@ export const useEventsSort = () => {
       const afstandToToday = obj.date.getTime() - today.getTime();
       if (
         closedAfstandState === null ||
-        (closedAfstandState > afstandToToday && afstandToToday >= 0)
+        (closedAfstandState > afstandToToday && afstandToToday >= 0) ||
+        (closedAfstandState < 0 && afstandToToday >= 0)
       ) {
         setFocusedEvent(obj._id);
         setClosedAfstandState(afstandToToday);
