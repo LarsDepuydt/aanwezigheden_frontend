@@ -15,7 +15,7 @@
 }
 
 @mixin box($max-padding: p.$padding-max-box, $grow: p.$padding-grow-box) {
-  margin: 10vmin auto 0 auto;
+  margin: 3vh auto auto auto;
   width: 100%;
   max-width: 550px;
   border-radius: v.$borderRadius;
@@ -25,6 +25,7 @@
   @media (max-width: 560px) {
     width: 100%;
     box-shadow: none;
+    margin-top: 3vh;
   }
 }
 

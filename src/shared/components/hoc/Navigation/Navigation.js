@@ -11,7 +11,6 @@ const Navigation = () => {
   const [showNieuwEvent, setShowNieuwEvent] = useState(true);
 
   useEffect(() => {
-    console.log(history.pathname.slice(-12));
     if (history.pathname.slice(-12) === "/nieuw-event") {
       setShowNieuwEvent(false);
     } else {

@@ -11,19 +11,19 @@ $padding-grow-link: 10vw;
 $padding-max-delete: 10px;
 $padding-min-delete: 0;
 $padding-grow-delete: 10vw;
-$padding-verhouding-delete: 8/12;
+$padding-verhouding-delete: math.div(8, 12);
 
 $padding-max-janee: 40px;
 $padding-min-janee: 10px;
 $padding-grow-janee: 10vw;
-$padding-verhouding-janee: 4/12;
+$padding-verhouding-janee: math.div(4, 12);
 
 $padding-max-box: 40px;
 $padding-min-box: 5px;
 $padding-grow-box: 5vw;
-$padding-verhouding-box: 1/2;
+$padding-verhouding-box: math.div(1, 2);
 
-@mixin responsive-padding($min, $max: false, $responsive: 10vw, $verhouding: 6/12, $fallback: false) {
+@mixin responsive-padding($min, $max: false, $responsive: 10vw, $verhouding: math.div(6, 12), $fallback: false) {
   $responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
   $dimension: if(unit($responsive) == "vh", "height", "width");
   $min-breakpoint: math.div($min, $responsive-unitless * 100);

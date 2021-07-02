@@ -31,6 +31,6 @@ $color: black;
 
 .backdrop {
   position: absolute;
-  top: math.div(calc((#{v.$heightSpinnerBox} - 100px)), 2);
-  left: math.div(calc((#{v.$widthSpinnerBox} - 100px)), 2);
+  top: math.div(v.$heightSpinnerBox - 100px, 2);
+  left: math.div(v.$widthSpinnerBox - 100px, 2);
 }
