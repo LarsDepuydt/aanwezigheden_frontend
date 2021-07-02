@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useEventsSort } from "../../shared/hooks/events-hook";
@@ -8,6 +8,7 @@ import Year from "./components/Year/Year";
 import Spinner from "../../shared/components/HttpHandling/Spinners/LoadingSpinnerCenter/LoadingSpinnerCenter";
 import PageError from "../../shared/components/HttpHandling/PageError/PageError";
 import GeenEvents from "./components/GeenEvents/GeenEvents";
+import Button from "../../shared/components/UI/Button/Button";
 
 const Main = () => {
   const auth = useContext(AuthContext);
@@ -20,6 +21,8 @@ const Main = () => {
     updateCardInfo,
     deleteCard,
   } = useEventsSort();
+  const [vandaagScroll, setVandaagScroll] = useState(false);
+  const [showVandaag, setShowVandaag] = useState(false);
 
   const { token, vereniging } = auth;
   useEffect(() => {
@@ -79,6 +82,23 @@ const Main = () => {
     };
     fetchEvents();
   }, [sendRequest, token, vereniging, sortArrayByDate]);
+
+  useLayoutEffect(() => {
+    const handleScroll = () => {
+      if (!showVandaag) {
+        setShowVandaag(true);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      window.addEventListener("scroll", handleScroll);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const cardStateChangeValueHandler = (id, number, month, year) => {
     const oldValue = events[year][month][number].state;
@@ -157,6 +177,16 @@ const Main = () => {
     history.push(old + "/nieuw-event");
   };
 
+  const vandaagClickedHandler = () => {
+    if (vandaagScroll) {
+      setVandaagScroll(false);
+    } else {
+      setVandaagScroll(true);
+    }
+
+    setShowVandaag(false);
+  };
+
   let years;
   if (Object.keys(events).length > 0) {
     const keys = Object.keys(events);
@@ -166,6 +196,7 @@ const Main = () => {
         year={year}
         focusedEvent={focusedEvent}
         months={events[year]}
+        vandaag={vandaagScroll}
         changeValue={cardStateChangeHandler}
         changeValueHandler={cardStateChangeValueHandler}
         eventUpdated={eventUpdatedHandler}
@@ -176,6 +207,11 @@ const Main = () => {
 
   return (
     <>
+      {showVandaag && (
+        <Button small btnType="arrow" clicked={vandaagClickedHandler}>
+          Vandaag
+        </Button>
+      )}
       {isLoading && !error && (
         <>
           <Spinner />
