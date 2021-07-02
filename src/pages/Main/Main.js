@@ -92,7 +92,7 @@ const Main = () => {
 
     const timer = setTimeout(() => {
       window.addEventListener("scroll", handleScroll);
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(timer);
