@@ -50,6 +50,7 @@ const Month = (props) => {
         key={event._id}
         event={event}
         focusedEvent={props.focusedEvent}
+        vandaag={props.vandaag}
         changeValue={(v, id) =>
           props.changeValue(
             v,

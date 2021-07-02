@@ -17,6 +17,7 @@ const Year = (props) => {
         monthNumber={month}
         events={props.months[month]}
         focusedEvent={props.focusedEvent}
+        vandaag={props.vandaag}
         changeValue={(v, id, n, m) =>
           props.changeValue(v, id, n, m, props.year)
         }

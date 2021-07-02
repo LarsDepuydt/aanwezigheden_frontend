@@ -35,9 +35,20 @@ const Datum = (props) => {
       refFocus.current.scrollIntoView({
         block: "center",
         inline: "center",
+        behavior: "instant",
       });
     }
   }, [focusedEvent, id]);
+
+  useEffect(() => {
+    if (focusedEvent === id) {
+      refFocus.current.scrollIntoView({
+        block: "center",
+        inline: "center",
+        behavior: "smooth",
+      });
+    }
+  }, [focusedEvent, id, props.vandaag]); // zorgt voor de terug naar vandaag knop
 
   return (
     <div className={[classes.DatumDiv, event.past && classes.past].join(" ")}>
